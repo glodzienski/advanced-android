@@ -1,14 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             xmlns:tools="http://schemas.android.com/tools"
+             xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
              android:layout_width="match_parent"
              android:layout_height="match_parent"
-             tools:context=".CidadeDescricao">
-
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+             tools:context=".fragment.CidadeDescricaoFragment">
+    <LinearLayout
+            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="@string/hello_blank_fragment"/>
-
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp">
+        <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="275dp" tools:src="@tools:sample/backgrounds/scenic"
+                android:id="@+id/imgCidade"/>
+        <TextView
+                android:text="Cidade"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:id="@+id/labelCidade" android:textSize="24sp"/>
+        <TextView
+                android:text="País"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:id="@+id/labelPais"/>
+    </LinearLayout>
 </FrameLayout>

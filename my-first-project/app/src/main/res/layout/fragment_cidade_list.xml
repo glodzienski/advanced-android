@@ -10,5 +10,6 @@
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         app:layoutManager="LinearLayoutManager"
-        tools:context=".CidadeFragment"
-        tools:listitem="@layout/fragment_cidade"/>
+        tools:context=".fragment.CidadeListaFragment"
+        tools:listitem="@layout/cidade_item" android:scrollbars="vertical"
+/>

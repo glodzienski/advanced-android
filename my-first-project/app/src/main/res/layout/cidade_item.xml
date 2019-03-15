@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                             xmlns:app="http://schemas.android.com/apk/res-auto"
+                                             xmlns:tools="http://schemas.android.com/tools"
+                                             android:layout_width="match_parent"
+                                             android:layout_height="wrap_content">
+
+    <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="2dp"
+            android:layout_marginEnd="2dp" app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" android:layout_marginTop="2dp" android:layout_marginBottom="2dp"
+            app:layout_constraintBottom_toBottomOf="parent" android:gravity="top"
+            app:layout_constraintHorizontal_bias="1.0" app:layout_constraintVertical_bias="0.0"
+            android:id="@+id/linearLayout">
+        <ImageView
+                android:layout_width="102dp"
+                android:layout_height="wrap_content" app:srcCompat="@mipmap/ic_launcher" android:id="@+id/imageView"
+                android:layout_weight="0"/>
+        <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="235dp"
+                android:layout_height="match_parent" android:layout_weight="0">
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" tools:layout_editor_absoluteY="355dp"
+                    tools:layout_editor_absoluteX="176dp" android:id="@+id/txtNome"
+                    android:text="Cidade" android:textSize="20sp"
+                    android:textColor="#423d3d" android:textAlignment="viewStart"/>
+            <TextView
+                    android:text="Pais"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" android:id="@+id/txtPais" android:layout_weight="0"
+                    android:textSize="14sp"/>
+        </LinearLayout>
+        <Button
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/btnView"
+                android:layout_weight="0"
+                android:textAlignment="center"
+                android:padding="100dp"
+                android:textSize="8sp" android:textColor="#000" android:text="LOOK"/>
+    </LinearLayout>
+</android.support.constraint.ConstraintLayout>
