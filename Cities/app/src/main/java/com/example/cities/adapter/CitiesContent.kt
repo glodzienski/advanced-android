@@ -1,4 +1,4 @@
-package com.example.cities.dummy
+package com.example.cities.adapter
 
 import com.example.cities.model.City
 import java.util.ArrayList

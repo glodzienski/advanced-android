@@ -9,10 +9,10 @@
             android:name="com.example.cities.ItemListFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
+            android:layout_marginLeft="0dp"
+            android:layout_marginRight="0dp"
             app:layoutManager="LinearLayoutManager"
-            tools:context=".MainActivity"
+            tools:context=".ui.MainActivity"
             tools:listitem="@layout/item_list_content" tools:itemCount="14"
-    />
+            android:background="#3a3a3a"/>
 </FrameLayout>
