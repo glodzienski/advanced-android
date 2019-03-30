@@ -11,18 +11,11 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.webcities.R
 import com.example.webcities.adapter.MyCityRecyclerViewAdapter
-
 import com.example.webcities.dummy.CitiesContent
-import com.example.webcities.dummy.CitiesContent.DummyItem
+import com.example.webcities.entities.City
 
-/**
- * A fragment representing a list of Items.
- * Activities containing this fragment MUST implement the
- * [CityFragment.OnListFragmentInteractionListener] interface.
- */
 class CityFragment : Fragment() {
 
-    // TODO: Customize parameters
     private var columnCount = 1
 
     private var listener: OnListFragmentInteractionListener? = null
@@ -80,16 +73,13 @@ class CityFragment : Fragment() {
      * for more information.
      */
     interface OnListFragmentInteractionListener {
-        // TODO: Update argument type and name
-        fun onListFragmentInteraction(item: DummyItem?)
+        fun onListFragmentInteraction(item: City?)
     }
 
     companion object {
 
-        // TODO: Customize parameter argument names
         const val ARG_COLUMN_COUNT = "column-count"
 
-        // TODO: Customize parameter initialization
         @JvmStatic
         fun newInstance(columnCount: Int) =
             CityFragment().apply {
