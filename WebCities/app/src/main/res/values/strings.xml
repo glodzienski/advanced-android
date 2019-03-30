@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">WebCities</string>
+    <string name="title_city_list">Cities</string>
+    <string name="title_city_detail">City Detail</string>
 </resources>
