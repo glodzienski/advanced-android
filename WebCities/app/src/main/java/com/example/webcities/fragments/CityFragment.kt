@@ -1,4 +1,4 @@
-package com.example.webcities.fragment
+package com.example.webcities.fragments
 
 import android.content.Context
 import android.os.Bundle
@@ -10,7 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.webcities.R
-import com.example.webcities.adapter.MyCityRecyclerViewAdapter
+import com.example.webcities.adapters.MyCityRecyclerViewAdapter
 import com.example.webcities.dummy.CitiesContent
 import com.example.webcities.entities.City
 

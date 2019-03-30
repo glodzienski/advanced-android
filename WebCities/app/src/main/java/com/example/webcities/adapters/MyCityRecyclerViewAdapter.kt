@@ -1,4 +1,4 @@
-package com.example.webcities.adapter
+package com.example.webcities.adapters
 
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 
 
-import com.example.webcities.fragment.CityFragment.OnListFragmentInteractionListener
+import com.example.webcities.fragments.CityFragment.OnListFragmentInteractionListener
 import com.example.webcities.R
 import com.example.webcities.entities.City
 

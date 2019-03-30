@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.RecyclerView
 import com.example.webcities.R
-import com.example.webcities.adapter.CitiesRecyclerViewAdapter
+import com.example.webcities.adapters.CitiesRecyclerViewAdapter
 import com.example.webcities.dummy.CitiesContent
 import kotlinx.android.synthetic.main.activity_city_list.*
 import kotlinx.android.synthetic.main.city_list.*

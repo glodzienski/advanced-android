@@ -1,4 +1,4 @@
-package com.example.webcities.fragment
+package com.example.webcities.fragments
 
 import android.os.Bundle
 import android.support.v4.app.Fragment

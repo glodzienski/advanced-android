@@ -8,7 +8,7 @@
         tools:context=".ui.MainActivity">
     <fragment
             android:layout_width="0dp"
-            android:layout_height="0dp" android:name="com.example.webcities.fragment.CityFragment"
+            android:layout_height="0dp" android:name="com.example.webcities.fragments.CityFragment"
             android:id="@+id/fragmentCitiesLarge" app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" app:layout_constraintBottom_toBottomOf="parent"

@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
-import com.example.webcities.fragment.CityDetailFragment
+import com.example.webcities.fragments.CityDetailFragment
 import com.example.webcities.R
 import kotlinx.android.synthetic.main.activity_city_detail.*
 

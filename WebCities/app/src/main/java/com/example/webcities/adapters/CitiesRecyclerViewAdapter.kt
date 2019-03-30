@@ -1,4 +1,4 @@
-package com.example.webcities.adapter
+package com.example.webcities.adapters
 
 import android.content.Intent
 import android.os.Bundle
@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import com.example.webcities.R
 import com.example.webcities.entities.City
-import com.example.webcities.fragment.CityDetailFragment
+import com.example.webcities.fragments.CityDetailFragment
 import com.example.webcities.ui.CityDetailActivity
 import com.example.webcities.ui.CityListActivity
 import kotlinx.android.synthetic.main.city_list_content.view.*

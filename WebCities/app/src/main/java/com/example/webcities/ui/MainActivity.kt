@@ -4,7 +4,7 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import com.example.webcities.R
 import com.example.webcities.entities.City
-import com.example.webcities.fragment.CityFragment
+import com.example.webcities.fragments.CityFragment
 
 class MainActivity : AppCompatActivity(), CityFragment.OnListFragmentInteractionListener {
 
