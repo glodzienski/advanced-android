@@ -1,7 +1,8 @@
-package com.example.webcities
+package com.example.webcities.ui
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import com.example.webcities.R
 
 class MainActivity : AppCompatActivity() {
 

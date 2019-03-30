@@ -1,4 +1,4 @@
-package com.example.webcities
+package com.example.webcities.fragment
 
 import android.content.Context
 import android.os.Bundle
@@ -9,6 +9,8 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.example.webcities.R
+import com.example.webcities.adapter.MyCityRecyclerViewAdapter
 
 import com.example.webcities.dummy.DummyContent
 import com.example.webcities.dummy.DummyContent.DummyItem
