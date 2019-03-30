@@ -21,13 +21,18 @@ object CitiesContent {
     init {
         // Add some sample items.
         for (i in 1..COUNT) {
-            addItem(createCity(i))
+            add(createCity(i))
         }
     }
 
-    private fun addItem(item: City) {
+    fun add(item: City) {
         ITEMS.add(item)
         ITEM_MAP.put(item.id, item)
+    }
+
+    fun remove(item: City) {
+        ITEMS.remove(item)
+        ITEM_MAP.remove(item.id)
     }
 
     private fun createCity(position: Int): City {

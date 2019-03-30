@@ -30,7 +30,7 @@ class CityListActivity : AppCompatActivity() {
         setContentView(R.layout.activity_city_list)
 
         setSupportActionBar(toolbar)
-        toolbar.title = title
+        toolbar.title = "WebCities"
 
         btnNew.setOnClickListener { view ->
             // TODO abre uma nova tela, onde será possivel realizar o cadastro de uma nova cidade

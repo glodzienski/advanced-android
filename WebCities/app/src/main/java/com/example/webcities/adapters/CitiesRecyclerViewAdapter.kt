@@ -7,12 +7,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import com.example.webcities.R
 import com.example.webcities.entities.City
 import com.example.webcities.fragments.CityDetailFragment
 import com.example.webcities.ui.CityDetailActivity
 import com.example.webcities.ui.CityListActivity
 import kotlinx.android.synthetic.main.city_list_content.view.*
+import com.example.webcities.R
+import android.app.AlertDialog
+import android.content.DialogInterface
+import android.widget.Toast
+import com.example.webcities.components.DialogOnConfirm
+import com.example.webcities.services.CityService
+
 
 class CitiesRecyclerViewAdapter (
     private val parentActivity: CityListActivity,
@@ -21,6 +27,7 @@ class CitiesRecyclerViewAdapter (
 ) : RecyclerView.Adapter<CitiesRecyclerViewAdapter.ViewHolder>() {
 
     private val onClickListener: View.OnClickListener
+    private val onLongClickListener: View.OnLongClickListener
 
     init {
         onClickListener = View.OnClickListener { v ->
@@ -44,6 +51,24 @@ class CitiesRecyclerViewAdapter (
             }
             v.context.startActivity(intent)
         }
+        onLongClickListener = View.OnLongClickListener { v ->
+            val item = v.tag as City
+
+            DialogOnConfirm.go(
+                parentActivity,
+                "Atenção",
+                "Deseja excluir a cidade ${item.name}?",
+                {
+                    CityService.destroy(item)
+                    this.notifyDataSetChanged()
+                    Toast.makeText(parentActivity, "Cidade ${item.name} excluída com sucesso.", Toast.LENGTH_SHORT).show()
+                },
+                {
+
+                }
+            )
+            true
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -61,6 +86,7 @@ class CitiesRecyclerViewAdapter (
         with(holder.itemView) {
             tag = item
             setOnClickListener(onClickListener)
+            setOnLongClickListener(onLongClickListener)
         }
     }
 
