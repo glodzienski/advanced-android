@@ -12,8 +12,8 @@ import android.view.ViewGroup
 import com.example.webcities.R
 import com.example.webcities.adapter.MyCityRecyclerViewAdapter
 
-import com.example.webcities.dummy.DummyContent
-import com.example.webcities.dummy.DummyContent.DummyItem
+import com.example.webcities.dummy.CitiesContent
+import com.example.webcities.dummy.CitiesContent.DummyItem
 
 /**
  * A fragment representing a list of Items.
@@ -48,7 +48,7 @@ class CityFragment : Fragment() {
                     columnCount <= 1 -> LinearLayoutManager(context)
                     else -> GridLayoutManager(context, columnCount)
                 }
-                adapter = MyCityRecyclerViewAdapter(DummyContent.ITEMS, listener)
+                adapter = MyCityRecyclerViewAdapter(CitiesContent.ITEMS, listener)
             }
         }
         return view

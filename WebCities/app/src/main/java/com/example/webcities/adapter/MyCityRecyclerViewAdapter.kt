@@ -9,7 +9,7 @@ import android.widget.TextView
 
 import com.example.webcities.fragment.CityFragment.OnListFragmentInteractionListener
 import com.example.webcities.R
-import com.example.webcities.dummy.DummyContent.DummyItem
+import com.example.webcities.dummy.CitiesContent.DummyItem
 
 import kotlinx.android.synthetic.main.fragment_city.view.*
 
