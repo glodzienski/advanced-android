@@ -17,7 +17,8 @@
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                app:popupTheme="@style/AppTheme.PopupOverlay"/>
+                app:popupTheme="@style/AppTheme.PopupOverlay"
+                android:background="@color/design_default_color_primary_dark"/>
 
     </android.support.design.widget.AppBarLayout>
 
@@ -31,12 +32,13 @@
     </FrameLayout>
 
     <android.support.design.widget.FloatingActionButton
-            android:id="@+id/fab"
+            android:id="@+id/btnNew"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
             android:layout_margin="@dimen/fab_margin"
-            app:srcCompat="@android:drawable/ic_dialog_email"/>
+            app:srcCompat="@drawable/ic_add_24dp"
+            app:backgroundTint="@color/design_default_color_primary_dark"/>
 
 
 </android.support.design.widget.CoordinatorLayout>
