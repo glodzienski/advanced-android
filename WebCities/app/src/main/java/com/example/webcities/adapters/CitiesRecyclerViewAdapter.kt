@@ -13,8 +13,6 @@ import com.example.webcities.ui.CityDetailActivity
 import com.example.webcities.ui.CityListActivity
 import kotlinx.android.synthetic.main.city_list_content.view.*
 import com.example.webcities.R
-import android.app.AlertDialog
-import android.content.DialogInterface
 import android.widget.Toast
 import com.example.webcities.components.DialogOnConfirm
 import com.example.webcities.services.CityService
@@ -57,11 +55,11 @@ class CitiesRecyclerViewAdapter (
             DialogOnConfirm.go(
                 parentActivity,
                 "Atenção",
-                "Deseja excluir a cidade ${item.name}?",
+                "Deseja excluir a cidade ${item.nome}?",
                 {
                     CityService.destroy(item)
                     this.notifyDataSetChanged()
-                    Toast.makeText(parentActivity, "Cidade ${item.name} excluída com sucesso.", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(parentActivity, "Cidade ${item.nome} excluída com sucesso.", Toast.LENGTH_SHORT).show()
                 },
                 {
 
@@ -80,8 +78,8 @@ class CitiesRecyclerViewAdapter (
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = values[position]
-        holder.idView.text = item.id
-        holder.contentView.text = item.name
+        holder.nomeView.text = item.nome
+        holder.paisView.text = item.pais
 
         with(holder.itemView) {
             tag = item
@@ -93,7 +91,7 @@ class CitiesRecyclerViewAdapter (
     override fun getItemCount() = values.size
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val idView: TextView = view.id_text
-        val contentView: TextView = view.content
+        val nomeView: TextView = view.txtNome
+        val paisView: TextView = view.txtPais
     }
 }

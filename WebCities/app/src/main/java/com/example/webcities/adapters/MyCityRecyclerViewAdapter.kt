@@ -38,7 +38,7 @@ class MyCityRecyclerViewAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = mValues[position]
         holder.mIdView.text = item.id
-        holder.mNameView.text = item.name
+        holder.mNameView.text = item.nome
 
         with(holder.mView) {
             tag = item

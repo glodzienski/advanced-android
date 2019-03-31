@@ -33,7 +33,7 @@ class CityDetailFragment : Fragment() {
                 // arguments. In a real-world scenario, use a Loader
                 // to load content from a content provider.
                 item = CitiesContent.ITEM_MAP[it.getString(ARG_ITEM_ID)]
-                activity?.toolbar_layout?.title = item?.name
+                activity?.toolbar_layout?.title = item?.nome
             }
         }
     }
