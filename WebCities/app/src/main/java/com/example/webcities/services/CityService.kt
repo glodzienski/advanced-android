@@ -5,8 +5,12 @@ import com.example.webcities.entities.City
 
 class CityService {
     companion object {
-        fun destroy (city: City) {
+        fun destroy(city: City) {
             CitiesContent.remove(city)
+        }
+
+        fun store(city: City) {
+            CitiesContent.add(city)
         }
     }
 }
