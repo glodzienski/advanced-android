@@ -1,5 +1,6 @@
 package com.example.webcities.ui
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.RecyclerView
@@ -22,6 +23,8 @@ class CityListActivity : AppCompatActivity() {
 
         btnNew.setOnClickListener { view ->
             // TODO abre uma nova tela, onde será possivel realizar o cadastro de uma nova cidade
+            val intent = Intent(view.context, CityFormActivity::class.java)
+            view.context.startActivity(intent)
         }
 
         if (city_detail_container != null) {
