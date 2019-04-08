@@ -23,15 +23,53 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <!--<FrameLayout
-            android:id="@+id/frameLayout"
+
+    <LinearLayout
+            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+            android:layout_height="match_parent" android:id="@+id/formFields">
+        <TextView android:layout_marginTop="55dp"
+                  android:text="@string/title_form_city"
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:id="@+id/formTitle"
+                  android:textSize="24sp"
+                  android:textColor="#494949"
+                  android:textStyle="bold"
+                  android:textAlignment="textStart"
+                  android:padding="15dp"
+        />
+        <android.support.design.widget.TextInputLayout
+                android:id="@+id/text_input_layout_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+        >
 
-        <include layout="@layout/city_list"/>
-    </FrameLayout>-->
+            <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Nome"
+                    android:ems="10"
+                    android:id="@+id/edtName" android:inputType="text"/>
+        </android.support.design.widget.TextInputLayout>
+        <android.support.design.widget.TextInputLayout
+                android:id="@+id/text_input_layout_country"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+        >
 
+            <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="País"
+                    android:ems="10"
+                    android:id="@+id/edtCountry" android:inputType="text"/>
+        </android.support.design.widget.TextInputLayout>
+    </LinearLayout>
     <android.support.design.widget.FloatingActionButton
             android:id="@+id/btnNew"
             android:layout_width="wrap_content"
