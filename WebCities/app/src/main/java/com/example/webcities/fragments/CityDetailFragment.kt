@@ -11,17 +11,8 @@ import com.example.webcities.entities.City
 import kotlinx.android.synthetic.main.activity_city_detail.*
 import kotlinx.android.synthetic.main.city_detail.view.*
 
-/**
- * A fragment representing a single City detail screen.
- * This fragment is either contained in a [CityListActivity]
- * in two-pane mode (on tablets) or a [CityDetailActivity]
- * on handsets.
- */
 class CityDetailFragment : Fragment() {
 
-    /**
-     * The dummy content this fragment is presenting.
-     */
     private var item: City? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
