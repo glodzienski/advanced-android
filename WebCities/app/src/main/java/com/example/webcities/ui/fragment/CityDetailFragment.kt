@@ -1,4 +1,4 @@
-package com.example.webcities.fragments
+package com.example.webcities.ui.fragment
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -17,6 +17,7 @@ class CityDetailFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
 
         arguments?.let {
             if (it.containsKey(ARG_ITEM_ID)) {
@@ -35,7 +36,7 @@ class CityDetailFragment : Fragment() {
     ): View? {
         val rootView = inflater.inflate(R.layout.city_detail, container, false)
 
-        // Show the dummy content as text in a TextView.
+
         item?.let {
             rootView.city_detail.text = it.pais
         }

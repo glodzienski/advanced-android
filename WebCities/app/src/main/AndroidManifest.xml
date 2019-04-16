@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="com.example.webcities">
 
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-feature android:name="android.hardware.camera2"/>
+
     <application
             android:allowBackup="true"
             android:icon="@mipmap/ic_launcher"
@@ -9,10 +12,10 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
-        <activity android:name=".ui.CityFormActivity">
+        <activity android:name=".ui.activity.CityFormActivity">
         </activity>
         <activity
-                android:name=".ui.CityListActivity"
+                android:name=".ui.activity.CityListActivity"
                 android:label="@string/title_city_list"
                 android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -22,16 +25,21 @@
             </intent-filter>
         </activity>
         <activity
-                android:name=".ui.CityDetailActivity"
+                android:name=".ui.activity.CityDetailActivity"
                 android:label="@string/title_city_detail"
-                android:parentActivityName=".ui.CityListActivity"
+                android:parentActivityName=".ui.activity.CityListActivity"
                 android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
-                    android:value="com.example.webcities.ui.CityListActivity"/>
+                    android:value="com.example.webcities.ui.activity.CityListActivity"/>
         </activity>
-        <activity android:name=".ui.MainActivity">
-        </activity>
+        <provider android:authorities="${applicationId}.fileprovider"
+                  android:name="android.support.v4.content.FileProvider"
+                  android:exported="false"
+                  android:grantUriPermissions="true">
+            <meta-data android:name="android.support.FILE_PROVIDER_PATHS"
+                       android:resource="@xml/file_path"/>
+        </provider>
     </application>
 
 </manifest>

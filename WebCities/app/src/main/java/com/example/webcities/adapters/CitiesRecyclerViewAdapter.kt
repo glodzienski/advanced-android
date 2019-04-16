@@ -1,22 +1,23 @@
 package com.example.webcities.adapters
 
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.net.Uri
 import android.os.Bundle
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import com.example.webcities.entities.City
-import com.example.webcities.fragments.CityDetailFragment
-import com.example.webcities.ui.CityDetailActivity
-import com.example.webcities.ui.CityListActivity
+import com.example.webcities.ui.fragment.CityDetailFragment
+import com.example.webcities.ui.activity.CityDetailActivity
+import com.example.webcities.ui.activity.CityListActivity
 import kotlinx.android.synthetic.main.city_list_content.view.*
 import com.example.webcities.R
-import android.widget.Toast
-import com.example.webcities.components.DialogOnConfirm
-import com.example.webcities.services.CityService
-
+import kotlinx.android.synthetic.main.activity_city_form.*
 
 class CitiesRecyclerViewAdapter (
     private val parentActivity: CityListActivity,
@@ -25,7 +26,6 @@ class CitiesRecyclerViewAdapter (
 ) : RecyclerView.Adapter<CitiesRecyclerViewAdapter.ViewHolder>() {
 
     private val onClickListener: View.OnClickListener
-    private val onLongClickListener: View.OnLongClickListener
 
     init {
         onClickListener = View.OnClickListener { v ->
@@ -49,24 +49,23 @@ class CitiesRecyclerViewAdapter (
             }
             v.context.startActivity(intent)
         }
-        onLongClickListener = View.OnLongClickListener { v ->
-            val item = v.tag as City
+    }
 
-            DialogOnConfirm.go(
-                parentActivity,
-                "Atenção",
-                "Deseja excluir a cidade ${item.nome}?",
-                {
-                    CityService.destroy(item)
-                    this.notifyDataSetChanged()
-                    Toast.makeText(parentActivity, "Cidade ${item.nome} excluída com sucesso.", Toast.LENGTH_SHORT).show()
-                },
-                {
+    private fun prepareImage(imageUri: String): Bitmap {
+        val imageViewWidth = 200
+        val imageViewHeight = 200
 
-                }
-            )
-            true
-        }
+        val bmOptions = BitmapFactory.Options()
+        bmOptions.inJustDecodeBounds = true
+        BitmapFactory.decodeFile(imageUri, bmOptions)
+        val bitmapWidth = bmOptions.outWidth
+        val bitoutHeight = bmOptions.outHeight
+        val scaleFactor = Math.min(bitmapWidth/imageViewWidth, bitoutHeight/imageViewHeight)
+
+        bmOptions.inJustDecodeBounds = false
+        bmOptions.inSampleSize = scaleFactor
+
+        return BitmapFactory.decodeFile(imageUri, bmOptions)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -80,11 +79,12 @@ class CitiesRecyclerViewAdapter (
         val item = values[position]
         holder.nomeView.text = item.nome
         holder.paisView.text = item.pais
+        // TODO fazer carregar imagem
+//        holder.imageView.setImageBitmap(prepareImage(item.imagePath))
 
         with(holder.itemView) {
             tag = item
             setOnClickListener(onClickListener)
-            setOnLongClickListener(onLongClickListener)
         }
     }
 
@@ -93,5 +93,6 @@ class CitiesRecyclerViewAdapter (
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val nomeView: TextView = view.txtNome
         val paisView: TextView = view.txtPais
+        val imageView: ImageView = view.imageView
     }
 }
