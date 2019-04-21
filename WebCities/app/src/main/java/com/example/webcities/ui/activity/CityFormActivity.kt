@@ -1,4 +1,5 @@
 package com.example.webcities.ui.activity
+
 import android.app.Activity
 import android.content.Intent
 import android.graphics.Bitmap
@@ -11,6 +12,7 @@ import android.os.Environment
 import android.provider.MediaStore
 import android.support.v4.content.FileProvider
 import android.util.Log
+import com.example.webcities.components.FieldValidator
 import com.example.webcities.dummy.CitiesContent
 import com.example.webcities.entities.City
 import com.example.webcities.repositories.CityRepository
@@ -24,6 +26,58 @@ class CityFormActivity : AppCompatActivity() {
 
     val CAMERA_REQUEST_CODE = 0
     lateinit var imageFilePath: String
+    lateinit var fieldValidator: FieldValidator
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_city_form)
+
+        fieldValidator = FieldValidator(this)
+
+        btnAddPhoto.setOnClickListener {
+            try {
+                val imageFile = createImageFile()
+                val callCameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE_SECURE)
+
+                if (callCameraIntent.resolveActivity(packageManager) !== null) {
+                    val authorities = "$packageName.fileprovider"
+                    val imageUri = FileProvider.getUriForFile(this, authorities, imageFile)
+                    callCameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri)
+
+                    startActivityForResult(callCameraIntent, CAMERA_REQUEST_CODE)
+                }
+            } catch (e: IOException) {
+                Log.d("ERRO IO: ", "não foi possível carregar a câmera.")
+            }
+        }
+
+        btnSave.setOnClickListener { view ->
+            val nameOk = fieldValidator.isEditTextFilled(
+                edtName,
+                text_input_layout_name,
+                "Por favor, preencha o nome da cidade."
+            )
+            val countryOk = fieldValidator.isEditTextFilled(
+                edtCountry,
+                text_input_layout_country,
+                "Por favor, preencha o nome do país."
+            )
+            if (!nameOk || !countryOk) {
+                return@setOnClickListener
+            }
+
+            val city = City(
+                CitiesContent.ITEMS.count().toString(),
+                edtName.text.toString(),
+                edtCountry.text.toString(),
+                imageFilePath
+            )
+            CityRepository.store(city)
+
+            val intent = Intent(view.context, CityListActivity::class.java)
+            view.context.startActivity(intent)
+        }
+    }
 
     private fun createImageFile(): File {
         val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
@@ -53,7 +107,7 @@ class CityFormActivity : AppCompatActivity() {
         }
     }
 
-    private fun prepareImage (): Bitmap {
+    private fun prepareImage(): Bitmap {
         val imageViewWidth = imgCity.width
         val imageViewHeight = imgCity.height
 
@@ -62,50 +116,11 @@ class CityFormActivity : AppCompatActivity() {
         BitmapFactory.decodeFile(imageFilePath, bmOptions)
         val bitmapWidth = bmOptions.outWidth
         val bitoutHeight = bmOptions.outHeight
-        val scaleFactor = Math.min(bitmapWidth/imageViewWidth, bitoutHeight/imageViewHeight)
+        val scaleFactor = Math.min(bitmapWidth / imageViewWidth, bitoutHeight / imageViewHeight)
 
         bmOptions.inJustDecodeBounds = false
         bmOptions.inSampleSize = scaleFactor
 
         return BitmapFactory.decodeFile(imageFilePath, bmOptions)
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_city_form)
-
-        /* todo terminar essa parte*/
-
-        btnAddPhoto.setOnClickListener {
-            try {
-                val imageFile =  createImageFile()
-                val callCameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE_SECURE)
-
-                if (callCameraIntent.resolveActivity(packageManager) !== null) {
-                    val authorities = "$packageName.fileprovider"
-                    val imageUri = FileProvider.getUriForFile(this, authorities, imageFile)
-                    callCameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri)
-
-                    startActivityForResult(callCameraIntent, CAMERA_REQUEST_CODE)
-                }
-            }
-            catch (e: IOException) {
-                Log.d("ERRO IO: ", "não foi possível carregar a câmera.")
-            }
-        }
-
-        btnSave.setOnClickListener { view ->
-            // TODO validação
-            val city = City(
-                CitiesContent.ITEMS.count().toString(),
-                edtName.text.toString(),
-                edtCountry.text.toString(),
-                imageFilePath
-            )
-            CityRepository.store(city)
-
-            val intent = Intent(view.context, CityListActivity::class.java)
-            view.context.startActivity(intent)
-        }
     }
 }

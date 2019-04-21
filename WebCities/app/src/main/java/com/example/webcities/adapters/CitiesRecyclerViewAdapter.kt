@@ -3,7 +3,6 @@ package com.example.webcities.adapters
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.net.Uri
 import android.os.Bundle
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -17,7 +16,6 @@ import com.example.webcities.ui.activity.CityDetailActivity
 import com.example.webcities.ui.activity.CityListActivity
 import kotlinx.android.synthetic.main.city_list_content.view.*
 import com.example.webcities.R
-import kotlinx.android.synthetic.main.activity_city_form.*
 
 class CitiesRecyclerViewAdapter (
     private val parentActivity: CityListActivity,
@@ -79,8 +77,9 @@ class CitiesRecyclerViewAdapter (
         val item = values[position]
         holder.nomeView.text = item.nome
         holder.paisView.text = item.pais
-        // TODO fazer carregar imagem
-//        holder.imageView.setImageBitmap(prepareImage(item.imagePath))
+        if (!item.imagePath.equals("")) {
+            holder.imageView.setImageBitmap(prepareImage(item.imagePath))
+        }
 
         with(holder.itemView) {
             tag = item

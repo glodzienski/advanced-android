@@ -11,28 +11,15 @@ import android.widget.EditText
 
 class FieldValidator(val context: Context) {
 
-    fun isEditTextFilled(editText: EditText, textInputLayout: TextInputLayout, message: String): Boolean? {
+    fun isEditTextFilled(editText: EditText, textInputLayout: TextInputLayout, message: String): Boolean {
         val value = editText.text.toString().trim { it <= ' ' }
         if (value.isEmpty()) {
             textInputLayout.error = message
             hideKeyboardFrom(editText)
             return false
-        } else {
-            textInputLayout.isErrorEnabled = false
         }
 
-        return true
-    }
-
-    fun isEditTextEmail(editText: EditText, textInputLayout: TextInputLayout, message: String): Boolean? {
-        val value = editText.text.toString().trim { it <= ' ' }
-        if (value.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(value).matches()) {
-            textInputLayout.error = message
-            hideKeyboardFrom(editText)
-            return false
-        } else {
-            textInputLayout.isErrorEnabled = false
-        }
+        textInputLayout.isErrorEnabled = false
         return true
     }
 

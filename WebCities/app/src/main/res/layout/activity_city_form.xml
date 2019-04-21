@@ -8,83 +8,73 @@
         android:fitsSystemWindows="true"
         tools:context=".ui.activity.CityFormActivity">
 
-    <android.support.design.widget.AppBarLayout
-            android:id="@+id/app_bar"
+    <ScrollView
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/scroll"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:theme="@style/AppTheme.AppBarOverlay">
-
-        <android.support.v7.widget.Toolbar
-                android:id="@+id/toolbar"
+            android:layout_height="wrap_content">
+        <LinearLayout
+                android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                app:popupTheme="@style/AppTheme.PopupOverlay"
-                android:background="@color/design_default_color_primary_dark"/>
+                android:layout_height="match_parent"
+                android:id="@+id/formFields"
+                android:layout_marginHorizontal="10dp">
+            <TextView android:text="@string/title_form_city"
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:id="@+id/formTitle"
+                      android:textSize="24sp"
+                      android:textColor="#494949"
+                      android:textStyle="bold"
+                      android:textAlignment="textStart"
+                      android:padding="15dp"
+            />
+            <android.support.design.widget.TextInputLayout
+                    android:id="@+id/text_input_layout_name"
+                    android:layout_width="match_parent"
+                    android:outlineSpotShadowColor="#000000"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp">
 
-    </android.support.design.widget.AppBarLayout>
-
-
-    <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" android:id="@+id/formFields"
-            android:layout_marginHorizontal="10dp"
-    >
-        <TextView android:layout_marginTop="55dp"
-                  android:text="@string/title_form_city"
-                  android:layout_width="match_parent"
-                  android:layout_height="wrap_content"
-                  android:id="@+id/formTitle"
-                  android:textSize="24sp"
-                  android:textColor="#494949"
-                  android:textStyle="bold"
-                  android:textAlignment="textStart"
-                  android:padding="15dp"
-        />
-        <android.support.design.widget.TextInputLayout
-                android:id="@+id/text_input_layout_name"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp">
-
-            <EditText
+                <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Nome"
+                        android:ems="10"
+                        android:id="@+id/edtName" android:inputType="text"/>
+            </android.support.design.widget.TextInputLayout>
+            <android.support.design.widget.TextInputLayout
+                    android:id="@+id/text_input_layout_country"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Nome"
-                    android:ems="10"
-                    android:id="@+id/edtName" android:inputType="text"/>
-        </android.support.design.widget.TextInputLayout>
-        <android.support.design.widget.TextInputLayout
-                android:id="@+id/text_input_layout_country"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp">
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp">
 
-            <EditText
+                <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="País"
+                        android:ems="10"
+                        android:id="@+id/edtCountry" android:inputType="text"/>
+            </android.support.design.widget.TextInputLayout>
+            <Button
+                    android:text="Tirar foto"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:id="@+id/btnAddPhoto"/>
+            <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="País"
-                    android:ems="10"
-                    android:id="@+id/edtCountry" android:inputType="text"/>
-        </android.support.design.widget.TextInputLayout>
-        <Button
-                android:text="Tirar foto"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" android:id="@+id/btnAddPhoto"/>
-        <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/imgCity" app:layout_constraintTop_toTopOf="parent"
-                android:layout_marginTop="8dp" app:layout_constraintStart_toStartOf="parent"
-                android:layout_marginStart="8dp" app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginEnd="8dp" android:layout_marginBottom="8dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                android:background="@color/common_google_signin_btn_text_light_default"
-                app:layout_constraintHorizontal_bias="0.0" app:layout_constraintVertical_bias="1.0"
-                app:srcCompat="@mipmap/ic_launcher"/>
-    </LinearLayout>
+                    android:id="@+id/imgCity" app:layout_constraintTop_toTopOf="parent"
+                    android:layout_marginTop="8dp" app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginStart="8dp" app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginEnd="8dp" android:layout_marginBottom="8dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:background="@color/common_google_signin_btn_text_light_default"
+                    app:layout_constraintHorizontal_bias="0.0" app:layout_constraintVertical_bias="1.0"
+                    app:srcCompat="@mipmap/ic_launcher"/>
+        </LinearLayout>
+    </ScrollView>
     <android.support.design.widget.FloatingActionButton
             android:id="@+id/btnSave"
             android:layout_width="wrap_content"
