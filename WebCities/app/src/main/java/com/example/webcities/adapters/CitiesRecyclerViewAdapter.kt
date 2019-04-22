@@ -16,6 +16,7 @@ import com.example.webcities.ui.activity.CityDetailActivity
 import com.example.webcities.ui.activity.CityListActivity
 import kotlinx.android.synthetic.main.city_list_content.view.*
 import com.example.webcities.R
+import com.example.webcities.utils.ImageBuilder
 
 class CitiesRecyclerViewAdapter (
     private val parentActivity: CityListActivity,
@@ -49,23 +50,6 @@ class CitiesRecyclerViewAdapter (
         }
     }
 
-    private fun prepareImage(imageUri: String): Bitmap {
-        val imageViewWidth = 200
-        val imageViewHeight = 200
-
-        val bmOptions = BitmapFactory.Options()
-        bmOptions.inJustDecodeBounds = true
-        BitmapFactory.decodeFile(imageUri, bmOptions)
-        val bitmapWidth = bmOptions.outWidth
-        val bitoutHeight = bmOptions.outHeight
-        val scaleFactor = Math.min(bitmapWidth/imageViewWidth, bitoutHeight/imageViewHeight)
-
-        bmOptions.inJustDecodeBounds = false
-        bmOptions.inSampleSize = scaleFactor
-
-        return BitmapFactory.decodeFile(imageUri, bmOptions)
-    }
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.city_list_content, parent, false)
@@ -78,7 +62,7 @@ class CitiesRecyclerViewAdapter (
         holder.nomeView.text = item.nome
         holder.paisView.text = item.pais
         if (!item.imagePath.equals("")) {
-            holder.imageView.setImageBitmap(prepareImage(item.imagePath))
+            holder.imageView.setImageBitmap(ImageBuilder.prepare(item.imagePath, 200, 200))
         }
 
         with(holder.itemView) {

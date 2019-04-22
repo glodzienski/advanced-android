@@ -12,10 +12,11 @@ import android.os.Environment
 import android.provider.MediaStore
 import android.support.v4.content.FileProvider
 import android.util.Log
-import com.example.webcities.components.FieldValidator
+import com.example.webcities.utils.FieldValidator
 import com.example.webcities.dummy.CitiesContent
 import com.example.webcities.entities.City
 import com.example.webcities.repositories.CityRepository
+import com.example.webcities.utils.ImageBuilder
 import kotlinx.android.synthetic.main.activity_city_form.*
 import java.io.File
 import java.io.IOException
@@ -101,26 +102,9 @@ class CityFormActivity : AppCompatActivity() {
         when (requestCode) {
             CAMERA_REQUEST_CODE -> {
                 if (resultCode == Activity.RESULT_OK) {
-                    imgCity.setImageBitmap(prepareImage())
+                    imgCity.setImageBitmap(ImageBuilder.prepare(imageFilePath, imgCity.width, imgCity.height))
                 }
             }
         }
-    }
-
-    private fun prepareImage(): Bitmap {
-        val imageViewWidth = imgCity.width
-        val imageViewHeight = imgCity.height
-
-        val bmOptions = BitmapFactory.Options()
-        bmOptions.inJustDecodeBounds = true
-        BitmapFactory.decodeFile(imageFilePath, bmOptions)
-        val bitmapWidth = bmOptions.outWidth
-        val bitoutHeight = bmOptions.outHeight
-        val scaleFactor = Math.min(bitmapWidth / imageViewWidth, bitoutHeight / imageViewHeight)
-
-        bmOptions.inJustDecodeBounds = false
-        bmOptions.inSampleSize = scaleFactor
-
-        return BitmapFactory.decodeFile(imageFilePath, bmOptions)
     }
 }

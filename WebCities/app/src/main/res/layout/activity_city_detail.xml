@@ -31,6 +31,11 @@
                     app:layout_collapseMode="pin"
                     app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
 
+            <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" app:srcCompat="@drawable/ic_launcher_background"
+                    android:id="@+id/imgCity"/>
+
         </android.support.design.widget.CollapsingToolbarLayout>
 
     </android.support.design.widget.AppBarLayout>

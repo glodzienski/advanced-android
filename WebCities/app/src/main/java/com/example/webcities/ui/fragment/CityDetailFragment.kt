@@ -13,7 +13,7 @@ import kotlinx.android.synthetic.main.city_detail.view.*
 
 class CityDetailFragment : Fragment() {
 
-    private var item: City? = null
+    private lateinit var item: City
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,10 +21,7 @@ class CityDetailFragment : Fragment() {
 
         arguments?.let {
             if (it.containsKey(ARG_ITEM_ID)) {
-                // Load the dummy content specified by the fragment
-                // arguments. In a real-world scenario, use a Loader
-                // to load content from a content provider.
-                item = CitiesContent.ITEM_MAP[it.getString(ARG_ITEM_ID)]
+                item = CitiesContent.ITEM_MAP[it.getString(ARG_ITEM_ID)] as City
                 activity?.toolbar_layout?.title = item?.nome
             }
         }
@@ -36,7 +33,6 @@ class CityDetailFragment : Fragment() {
     ): View? {
         val rootView = inflater.inflate(R.layout.city_detail, container, false)
 
-
         item?.let {
             rootView.city_detail.text = it.pais
         }
@@ -45,10 +41,6 @@ class CityDetailFragment : Fragment() {
     }
 
     companion object {
-        /**
-         * The fragment argument representing the item ID that this fragment
-         * represents.
-         */
         const val ARG_ITEM_ID = "item_id"
     }
 }

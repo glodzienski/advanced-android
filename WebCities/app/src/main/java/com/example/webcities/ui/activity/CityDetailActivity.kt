@@ -7,6 +7,9 @@ import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
 import com.example.webcities.ui.fragment.CityDetailFragment
 import com.example.webcities.R
+import com.example.webcities.dummy.CitiesContent
+import com.example.webcities.entities.City
+import com.example.webcities.utils.ImageBuilder
 import kotlinx.android.synthetic.main.activity_city_detail.*
 
 class CityDetailActivity : AppCompatActivity() {
@@ -24,6 +27,14 @@ class CityDetailActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         if (savedInstanceState == null) {
+            val item = CitiesContent.ITEM_MAP[intent.getStringExtra(CityDetailFragment.ARG_ITEM_ID)] as City
+            if (item.imagePath.isNotEmpty()) {
+                imgCity.setImageBitmap(ImageBuilder.prepare(
+                    item.imagePath,
+                    1000,
+                    500
+                ))
+            }
             val fragment = CityDetailFragment().apply {
                 arguments = Bundle().apply {
                     putString(
