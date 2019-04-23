@@ -2,8 +2,6 @@ package com.example.webcities.ui.activity
 
 import android.app.Activity
 import android.content.Intent
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import com.example.webcities.R
 
 import android.support.v7.app.AppCompatActivity
@@ -26,7 +24,7 @@ import java.util.*
 class CityFormActivity : AppCompatActivity() {
 
     val CAMERA_REQUEST_CODE = 0
-    lateinit var imageFilePath: String
+    var imageFilePath: String = ""
     lateinit var fieldValidator: FieldValidator
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -103,6 +101,10 @@ class CityFormActivity : AppCompatActivity() {
             CAMERA_REQUEST_CODE -> {
                 if (resultCode == Activity.RESULT_OK) {
                     imgCity.setImageBitmap(ImageBuilder.prepare(imageFilePath, imgCity.width, imgCity.height))
+                }
+                else if (resultCode == Activity.RESULT_CANCELED) {
+                    File(imageFilePath).deleteOnExit()
+                    imageFilePath = ""
                 }
             }
         }

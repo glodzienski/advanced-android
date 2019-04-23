@@ -34,7 +34,8 @@ class CityDetailFragment : Fragment() {
         val rootView = inflater.inflate(R.layout.city_detail, container, false)
 
         item?.let {
-            rootView.city_detail.text = it.pais
+            rootView.city_name.text = it.nome
+            rootView.city_country.text = it.pais
         }
 
         return rootView

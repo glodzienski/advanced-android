@@ -3,6 +3,8 @@
           package="com.example.webcities">
 
     <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
+
     <uses-feature android:name="android.hardware.camera2"/>
 
     <application
@@ -11,9 +13,10 @@
             android:label="@string/app_name"
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
-            android:theme="@style/AppTheme">
-        <activity android:name=".ui.activity.CityFormActivity">
-        </activity>
+            android:theme="@style/AppTheme"
+            android:usesCleartextTraffic="true">
+        <activity android:name=".ui.activity.MainActivity"/>
+        <activity android:name=".ui.activity.CityFormActivity"/>
         <activity
                 android:name=".ui.activity.CityListActivity"
                 android:label="@string/title_city_list"
@@ -33,12 +36,15 @@
                     android:name="android.support.PARENT_ACTIVITY"
                     android:value="com.example.webcities.ui.activity.CityListActivity"/>
         </activity>
-        <provider android:authorities="${applicationId}.fileprovider"
-                  android:name="android.support.v4.content.FileProvider"
-                  android:exported="false"
-                  android:grantUriPermissions="true">
-            <meta-data android:name="android.support.FILE_PROVIDER_PATHS"
-                       android:resource="@xml/file_path"/>
+
+        <provider
+                android:name="android.support.v4.content.FileProvider"
+                android:authorities="${applicationId}.fileprovider"
+                android:exported="false"
+                android:grantUriPermissions="true">
+            <meta-data
+                    android:name="android.support.FILE_PROVIDER_PATHS"
+                    android:resource="@xml/file_path"/>
         </provider>
     </application>
 

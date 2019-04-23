@@ -1,8 +1,6 @@
 package com.example.webcities.adapters
 
 import android.content.Intent
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -61,7 +59,7 @@ class CitiesRecyclerViewAdapter (
         val item = values[position]
         holder.nomeView.text = item.nome
         holder.paisView.text = item.pais
-        if (!item.imagePath.equals("")) {
+        if (item.imagePath.isNotEmpty()) {
             holder.imageView.setImageBitmap(ImageBuilder.prepare(item.imagePath, 200, 200))
         }
 
