@@ -14,15 +14,16 @@ import com.example.webcities.ui.activity.CityDetailActivity
 import com.example.webcities.ui.activity.CityListActivity
 import kotlinx.android.synthetic.main.city_list_content.view.*
 import com.example.webcities.R
+import com.example.webcities.utils.DialogOnConfirm
 import com.example.webcities.utils.ImageBuilder
 
-class CitiesRecyclerViewAdapter (
+class CitiesRecyclerViewAdapter(
     private val parentActivity: CityListActivity,
     private val values: List<City>,
     private val twoPane: Boolean
 ) : RecyclerView.Adapter<CitiesRecyclerViewAdapter.ViewHolder>() {
 
-    private val onClickListener: View.OnClickListener
+    private var onClickListener: View.OnClickListener
 
     init {
         onClickListener = View.OnClickListener { v ->
@@ -66,6 +67,21 @@ class CitiesRecyclerViewAdapter (
         with(holder.itemView) {
             tag = item
             setOnClickListener(onClickListener)
+            setOnLongClickListener(View.OnLongClickListener { v ->
+                DialogOnConfirm.go(
+                    v.context,
+                    "Atenção",
+                    "Deseja editar a cidade ${item.nome}?",
+                    {
+                        // TODO aqui manda lá pro CityForm.
+                    },
+                    {
+                        // Do nothing mesmo.
+                    }
+                )
+
+                true
+            })
         }
     }
 
