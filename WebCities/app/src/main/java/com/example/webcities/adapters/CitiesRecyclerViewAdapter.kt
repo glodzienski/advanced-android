@@ -14,6 +14,7 @@ import com.example.webcities.ui.activity.CityDetailActivity
 import com.example.webcities.ui.activity.CityListActivity
 import kotlinx.android.synthetic.main.city_list_content.view.*
 import com.example.webcities.R
+import com.example.webcities.ui.activity.CityFormActivity
 import com.example.webcities.utils.DialogOnConfirm
 import com.example.webcities.utils.ImageBuilder
 
@@ -73,7 +74,10 @@ class CitiesRecyclerViewAdapter(
                     "Atenção",
                     "Deseja editar a cidade ${item.nome}?",
                     {
-                        // TODO aqui manda lá pro CityForm.
+                        val intent = Intent(v.context, CityFormActivity::class.java).apply {
+                            putExtra("city_id", item.id)
+                        }
+                        v.context.startActivity(intent)
                     },
                     {
                         // Do nothing mesmo.

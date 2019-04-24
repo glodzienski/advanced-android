@@ -2,7 +2,6 @@ package com.example.webcities.ui.activity
 
 import android.content.Intent
 import android.os.Bundle
-import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
 import com.example.webcities.ui.fragment.CityDetailFragment
@@ -14,23 +13,28 @@ import kotlinx.android.synthetic.main.activity_city_detail.*
 
 class CityDetailActivity : AppCompatActivity() {
 
+    lateinit var city: City
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_city_detail)
         setSupportActionBar(detail_toolbar)
-
-        btnNew.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own detail action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show()
-        }
-
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
+        city = CitiesContent.ITEM_MAP[intent.getStringExtra(CityDetailFragment.ARG_ITEM_ID)] as City
+
+        btnNew.setOnClickListener { view ->
+            val intent = Intent(view.context, CityFormActivity::class.java).apply {
+                putExtra("city_id", city.id)
+            }
+            view.context.startActivity(intent)
+        }
+
+
         if (savedInstanceState == null) {
-            val item = CitiesContent.ITEM_MAP[intent.getStringExtra(CityDetailFragment.ARG_ITEM_ID)] as City
-            if (item.imagePath.isNotEmpty()) {
+            if (city.imagePath.isNotEmpty()) {
                 imgCity.setImageBitmap(ImageBuilder.prepare(
-                    item.imagePath,
+                    city.imagePath,
                     1000,
                     500
                 ))

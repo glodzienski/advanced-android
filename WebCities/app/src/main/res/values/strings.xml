@@ -5,4 +5,5 @@
     <string name="title_form_city">Cadastrar cidade</string>
     <string name="city_name_label">Cidade Nome</string>
     <string name="city_country_label">Cidade País</string>
+    <string name="edit_city_label">Editar cidade</string>
 </resources>

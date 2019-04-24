@@ -8,6 +8,7 @@ class CityRepository {
     companion object {
         private lateinit var instance: DatabaseReference
 
+        // Design Pattern Singleton
         fun getInstance(): DatabaseReference {
             if (::instance.isInitialized) {
                 return instance
@@ -28,6 +29,10 @@ class CityRepository {
 
         fun destroy(city: City) {
             getInstance().child(city.id).ref.removeValue()
+        }
+
+        fun update(city: City) {
+            getInstance().child(city.id).ref.setValue(city)
         }
     }
 }
