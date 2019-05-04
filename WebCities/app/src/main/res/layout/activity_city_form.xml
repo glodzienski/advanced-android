@@ -70,6 +70,18 @@
                         android:hint="CEP"
                         android:ems="10"
                         android:id="@+id/edtCep" android:inputType="number"/>
+                <TextView
+                        android:text="Informações do CEP:"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" android:id="@+id/address_status_label"
+                        android:textSize="18sp"
+                        android:layout_marginVertical="5dp"/>
+                <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" android:id="@+id/address_status_value"
+                        android:textSize="18sp"
+                        android:layout_marginVertical="10dp"
+                />
             </android.support.design.widget.TextInputLayout>
             <TextView
                     android:text="Iluminação:"

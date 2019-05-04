@@ -8,4 +8,8 @@ data class AddressDTO (
     @SerializedName("localidade") var cidade: String = "",
     @SerializedName("bairro") var bairro: String = "",
     @SerializedName("logradouro") var logradouro: String = ""
-)
+) {
+    override fun toString(): String {
+        return "${logradouro}. ${bairro}, ${cidade} - ${estado}"
+    }
+}

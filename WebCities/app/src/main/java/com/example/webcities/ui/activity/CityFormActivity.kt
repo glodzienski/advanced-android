@@ -333,11 +333,22 @@ class CityFormActivity : AppCompatActivity(), SensorEventListener {
     }
 
     private fun handleResponse(addressDTO: AddressDTO) {
+        if (addressDTO.cep.isNullOrEmpty()) {
+            text_input_layout_cep.error = "CEP inválido"
+            address_status_label.visibility = View.GONE
+            address_status_value.visibility = View.GONE
+            return
+        }
+
+        text_input_layout_cep.error = ""
         address = addressDTO
+        address_status_label.visibility = View.VISIBLE
+        address_status_value.visibility = View.VISIBLE
+        address_status_value.text = addressDTO.toString()
     }
 
     private fun handleError(error: Throwable) {
-        address = AddressDTO()
+        Log.d("ERRO IO: ", "não foi possível consultar o webservice viacep")
     }
 
 }
