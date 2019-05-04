@@ -3,7 +3,7 @@ package com.example.webcities.util
 import android.app.AlertDialog
 import android.content.Context
 
-object DialogOnConfirm {
+object DialogOnConfirmUtil {
     fun go(
         context: Context,
         title: String,

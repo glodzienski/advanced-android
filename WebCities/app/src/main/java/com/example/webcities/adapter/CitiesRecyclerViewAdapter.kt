@@ -15,8 +15,8 @@ import com.example.webcities.ui.activity.CityListActivity
 import kotlinx.android.synthetic.main.city_list_content.view.*
 import com.example.webcities.R
 import com.example.webcities.ui.activity.CityFormActivity
-import com.example.webcities.util.DialogOnConfirm
-import com.example.webcities.util.ImageBuilder
+import com.example.webcities.util.DialogOnConfirmUtil
+import com.example.webcities.util.ImageBuilderUtil
 
 class CitiesRecyclerViewAdapter(
     private val parentActivity: CityListActivity,
@@ -62,14 +62,14 @@ class CitiesRecyclerViewAdapter(
         holder.nomeView.text = item.nome
         holder.paisView.text = item.pais
         if (item.imagePath.isNotEmpty()) {
-            holder.imageView.setImageBitmap(ImageBuilder.prepare(item.imagePath, 200, 200))
+            holder.imageView.setImageBitmap(ImageBuilderUtil.prepare(item.imagePath, 200, 200))
         }
 
         with(holder.itemView) {
             tag = item
             setOnClickListener(onClickListener)
             setOnLongClickListener(View.OnLongClickListener { v ->
-                DialogOnConfirm.go(
+                DialogOnConfirmUtil.go(
                     v.context,
                     "Atenção",
                     "Deseja editar a cidade ${item.nome}?",

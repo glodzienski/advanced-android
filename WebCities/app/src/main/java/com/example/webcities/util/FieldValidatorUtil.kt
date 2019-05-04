@@ -9,7 +9,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 
 
-class FieldValidator(val context: Context) {
+class FieldValidatorUtil(val context: Context) {
 
     fun isEditTextFilled(editText: EditText, textInputLayout: TextInputLayout, message: String): Boolean {
         val value = editText.text.toString().trim { it <= ' ' }

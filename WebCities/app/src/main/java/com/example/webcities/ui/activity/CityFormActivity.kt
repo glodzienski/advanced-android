@@ -19,12 +19,12 @@ import android.text.TextWatcher
 import android.util.Log
 import android.view.View
 import com.example.webcities.DTO.AddressDTO
-import com.example.webcities.util.FieldValidator
+import com.example.webcities.util.FieldValidatorUtil
 import com.example.webcities.dummy.CitiesContent
 import com.example.webcities.entity.City
 import com.example.webcities.repository.CityRepository
 import com.example.webcities.service.ViaCepApiService
-import com.example.webcities.util.ImageBuilder
+import com.example.webcities.util.ImageBuilderUtil
 import com.example.webcities.util.MaskEditUtil
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -51,7 +51,7 @@ class CityFormActivity : AppCompatActivity(), SensorEventListener {
     * Referente a validalação de campos da tela
     *
     * */
-    lateinit var fieldValidator: FieldValidator
+    lateinit var fieldValidatorUtil: FieldValidatorUtil
 
     /*
     * Entidade da tela, para manipular valores e salvar no banoc
@@ -71,7 +71,7 @@ class CityFormActivity : AppCompatActivity(), SensorEventListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_city_form)
-        fieldValidator = FieldValidator(this)
+        fieldValidatorUtil = FieldValidatorUtil(this)
 
         if (intent.hasExtra("city_id") && intent.getStringExtra("city_id").isNotEmpty()) {
             city = CitiesContent.ITEM_MAP[intent.getStringExtra("city_id")] as City
@@ -80,7 +80,7 @@ class CityFormActivity : AppCompatActivity(), SensorEventListener {
             edtName.setText(city.nome)
             edtCountry.setText(city.pais)
             if (city.imagePath.isNotEmpty()) {
-                imgCity.setImageBitmap(ImageBuilder.prepare(city.imagePath, 1000, 500))
+                imgCity.setImageBitmap(ImageBuilderUtil.prepare(city.imagePath, 1000, 500))
             }
         }
 
@@ -128,18 +128,18 @@ class CityFormActivity : AppCompatActivity(), SensorEventListener {
     }
 
     private fun isValidToSaveCity(): Boolean {
-        val nameOk = fieldValidator.isEditTextFilled(
+        val nameOk = fieldValidatorUtil.isEditTextFilled(
             edtName,
             text_input_layout_name,
             "Por favor, preencha o nome da cidade."
         )
-        val countryOk = fieldValidator.isEditTextFilled(
+        val countryOk = fieldValidatorUtil.isEditTextFilled(
             edtCountry,
             text_input_layout_country,
             "Por favor, preencha o nome do país."
         )
 
-        val cepOk = fieldValidator.isEditTextFilled(
+        val cepOk = fieldValidatorUtil.isEditTextFilled(
             edtCep,
             text_input_layout_cep,
             "Por favor, preencha um CEP."
@@ -182,7 +182,7 @@ class CityFormActivity : AppCompatActivity(), SensorEventListener {
         when (requestCode) {
             CAMERA_REQUEST_CODE -> {
                 if (resultCode == Activity.RESULT_OK) {
-                    imgCity.setImageBitmap(ImageBuilder.prepare(imageFilePath, imgCity.width, imgCity.height))
+                    imgCity.setImageBitmap(ImageBuilderUtil.prepare(imageFilePath, imgCity.width, imgCity.height))
                     turnOffListenerSensor()
                 } else if (resultCode == Activity.RESULT_CANCELED) {
                     File(imageFilePath).deleteOnExit()

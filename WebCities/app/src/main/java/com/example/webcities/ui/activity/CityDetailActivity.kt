@@ -8,7 +8,7 @@ import com.example.webcities.ui.fragment.CityDetailFragment
 import com.example.webcities.R
 import com.example.webcities.dummy.CitiesContent
 import com.example.webcities.entity.City
-import com.example.webcities.util.ImageBuilder
+import com.example.webcities.util.ImageBuilderUtil
 import kotlinx.android.synthetic.main.activity_city_detail.*
 
 class CityDetailActivity : AppCompatActivity() {
@@ -33,7 +33,7 @@ class CityDetailActivity : AppCompatActivity() {
 
         if (savedInstanceState == null) {
             if (city.imagePath.isNotEmpty()) {
-                imgCity.setImageBitmap(ImageBuilder.prepare(
+                imgCity.setImageBitmap(ImageBuilderUtil.prepare(
                     city.imagePath,
                     1000,
                     500
