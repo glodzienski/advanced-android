@@ -14,6 +14,8 @@ import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
 import android.support.v4.content.FileProvider
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.View
 import com.example.webcities.DTO.AddressDTO
@@ -21,9 +23,16 @@ import com.example.webcities.util.FieldValidator
 import com.example.webcities.dummy.CitiesContent
 import com.example.webcities.entity.City
 import com.example.webcities.repository.CityRepository
+import com.example.webcities.service.ViaCepApiService
 import com.example.webcities.util.ImageBuilder
 import com.example.webcities.util.MaskEditUtil
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_city_form.*
+import retrofit2.Retrofit
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
+import retrofit2.converter.gson.GsonConverterFactory
 import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
@@ -31,15 +40,38 @@ import java.util.*
 
 class CityFormActivity : AppCompatActivity(), SensorEventListener {
 
+    /*
+    * Referente a camera
+    *
+    * */
     val CAMERA_REQUEST_CODE = 0
     var imageFilePath: String = ""
+
+    /*
+    * Referente a validalação de campos da tela
+    *
+    * */
     lateinit var fieldValidator: FieldValidator
+
+    /*
+    * Entidade da tela, para manipular valores e salvar no banoc
+    *
+    * */
     lateinit var city: City
-    lateinit var address: AddressDTO
+
+    /*
+    * Referente ao ViacepService
+    *
+    * */
+    private val BASE_URL = "https://viacep.com.br/ws/"
+    private val compositeDisposable = CompositeDisposable()
+    private val requestInterface = startRetrofit()
+    private lateinit var address: AddressDTO
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_city_form)
+        fieldValidator = FieldValidator(this)
 
         if (intent.hasExtra("city_id") && intent.getStringExtra("city_id").isNotEmpty()) {
             city = CitiesContent.ITEM_MAP[intent.getStringExtra("city_id")] as City
@@ -52,17 +84,9 @@ class CityFormActivity : AppCompatActivity(), SensorEventListener {
             }
         }
 
-        fieldValidator = FieldValidator(this)
 
-        edtCep.addTextChangedListener(MaskEditUtil.mask(edtCep, MaskEditUtil.FORMAT_CEP))
-
-        btnAddPhoto.setOnClickListener {
-            try {
-                this.startCamera()
-            } catch (e: IOException) {
-                Log.d("ERRO IO: ", "não foi possível carregar a câmera.")
-            }
-        }
+        startEdtCepStuffs()
+        startCameraStuffs()
 
         btnSave.setOnClickListener { view ->
             if (!this.isValidToSaveCity()) {
@@ -129,6 +153,15 @@ class CityFormActivity : AppCompatActivity(), SensorEventListener {
     * Sessão com lógica da câmera
     *
     * */
+    private fun startCameraStuffs() {
+        btnAddPhoto.setOnClickListener {
+            try {
+                this.startCamera()
+            } catch (e: IOException) {
+                Log.d("ERRO IO: ", "não foi possível carregar a câmera.")
+            }
+        }
+    }
 
     private fun startCamera() {
         val imageFile = createImageFile()
@@ -255,4 +288,56 @@ class CityFormActivity : AppCompatActivity(), SensorEventListener {
 
         return "Não foi possível calcular o status da iluminação do ambiente"
     }
+
+    /*
+    * Aqui para baixo métodos referentes ao via cep, web service
+    *
+    * */
+    private fun startRetrofit(): ViaCepApiService {
+        return Retrofit.Builder()
+            .baseUrl(BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+            .build()
+            .create(ViaCepApiService::class.java)
+    }
+
+    private fun startEdtCepStuffs() {
+        edtCep.addTextChangedListener(MaskEditUtil.mask(edtCep, MaskEditUtil.FORMAT_CEP))
+        edtCep.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable) {}
+
+            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
+
+            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+                val value = s.toString().replace("-", "")
+                if (value.count() == 8) {
+                    // Para prevenir reconsultas do cep digitado, já que por alguma razão o event listener cai mais
+                    // de uma vez aqui quando digitado um número somente.
+                    if (::address.isInitialized && address.cep == value) {
+                        return
+                    }
+                    consultCep(value)
+                }
+            }
+        })
+    }
+
+    private fun consultCep(cep: String) {
+        compositeDisposable.add(
+            requestInterface.show(cep)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(this::handleResponse, this::handleError)
+        )
+    }
+
+    private fun handleResponse(addressDTO: AddressDTO) {
+        address = addressDTO
+    }
+
+    private fun handleError(error: Throwable) {
+        address = AddressDTO()
+    }
+
 }
