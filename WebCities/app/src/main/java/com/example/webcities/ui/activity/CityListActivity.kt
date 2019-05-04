@@ -8,13 +8,12 @@ import android.support.v7.widget.StaggeredGridLayoutManager
 import android.support.v7.widget.helper.ItemTouchHelper
 import android.widget.Toast
 import com.example.webcities.R
-import com.example.webcities.adapters.CitiesRecyclerViewAdapter
+import com.example.webcities.adapter.CitiesRecyclerViewAdapter
 import com.example.webcities.dummy.CitiesContent
 import kotlinx.android.synthetic.main.activity_city_list.*
 import kotlinx.android.synthetic.main.city_list.*
-import com.example.webcities.entities.City
-import com.example.webcities.repositories.CityRepository
-import com.example.webcities.utils.DialogOnConfirm
+import com.example.webcities.entity.City
+import com.example.webcities.repository.CityRepository
 import com.google.firebase.database.*
 
 

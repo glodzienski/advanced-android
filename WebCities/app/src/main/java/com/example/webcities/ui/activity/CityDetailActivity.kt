@@ -7,8 +7,8 @@ import android.view.MenuItem
 import com.example.webcities.ui.fragment.CityDetailFragment
 import com.example.webcities.R
 import com.example.webcities.dummy.CitiesContent
-import com.example.webcities.entities.City
-import com.example.webcities.utils.ImageBuilder
+import com.example.webcities.entity.City
+import com.example.webcities.util.ImageBuilder
 import kotlinx.android.synthetic.main.activity_city_detail.*
 
 class CityDetailActivity : AppCompatActivity() {

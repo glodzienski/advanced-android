@@ -1,4 +1,4 @@
-package com.example.webcities.entities
+package com.example.webcities.entity
 
 import java.io.Serializable
 

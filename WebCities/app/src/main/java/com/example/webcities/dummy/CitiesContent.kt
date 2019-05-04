@@ -1,6 +1,6 @@
 package com.example.webcities.dummy
 
-import com.example.webcities.entities.City
+import com.example.webcities.entity.City
 import java.util.HashMap
 
 object CitiesContent {

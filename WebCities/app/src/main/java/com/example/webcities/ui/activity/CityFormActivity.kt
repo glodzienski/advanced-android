@@ -16,11 +16,13 @@ import android.provider.MediaStore
 import android.support.v4.content.FileProvider
 import android.util.Log
 import android.view.View
-import com.example.webcities.utils.FieldValidator
+import com.example.webcities.DTO.AddressDTO
+import com.example.webcities.util.FieldValidator
 import com.example.webcities.dummy.CitiesContent
-import com.example.webcities.entities.City
-import com.example.webcities.repositories.CityRepository
-import com.example.webcities.utils.ImageBuilder
+import com.example.webcities.entity.City
+import com.example.webcities.repository.CityRepository
+import com.example.webcities.util.ImageBuilder
+import com.example.webcities.util.MaskEditUtil
 import kotlinx.android.synthetic.main.activity_city_form.*
 import java.io.File
 import java.io.IOException
@@ -33,6 +35,7 @@ class CityFormActivity : AppCompatActivity(), SensorEventListener {
     var imageFilePath: String = ""
     lateinit var fieldValidator: FieldValidator
     lateinit var city: City
+    lateinit var address: AddressDTO
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,6 +53,8 @@ class CityFormActivity : AppCompatActivity(), SensorEventListener {
         }
 
         fieldValidator = FieldValidator(this)
+
+        edtCep.addTextChangedListener(MaskEditUtil.mask(edtCep, MaskEditUtil.FORMAT_CEP))
 
         btnAddPhoto.setOnClickListener {
             try {
@@ -71,54 +76,8 @@ class CityFormActivity : AppCompatActivity(), SensorEventListener {
         }
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-
-        when (requestCode) {
-            CAMERA_REQUEST_CODE -> {
-                if (resultCode == Activity.RESULT_OK) {
-                    imgCity.setImageBitmap(ImageBuilder.prepare(imageFilePath, imgCity.width, imgCity.height))
-                    turnOffListenerSensor()
-                } else if (resultCode == Activity.RESULT_CANCELED) {
-                    File(imageFilePath).deleteOnExit()
-                    imageFilePath = ""
-                    turnOnListenerSensor()
-                }
-            }
-        }
-    }
-
-    private fun createImageFile(): File {
-        val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
-        val imageFileName: String = "FOTA_" + timeStamp + "_"
-
-        val storageDir: File = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
-
-        if (!storageDir.exists()) {
-            storageDir.mkdirs()
-        }
-
-        val imageFile = File.createTempFile(imageFileName, ".png", storageDir)
-        imageFilePath = imageFile.absolutePath
-
-        return imageFile
-    }
-
     private fun isEditing(): Boolean {
         return ::city.isInitialized
-    }
-
-    private fun startCamera() {
-        val imageFile = createImageFile()
-        val callCameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE_SECURE)
-
-        if (callCameraIntent.resolveActivity(packageManager) !== null) {
-            val authorities = "$packageName.fileprovider"
-            val imageUri = FileProvider.getUriForFile(this, authorities, imageFile)
-            callCameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri)
-
-            startActivityForResult(callCameraIntent, CAMERA_REQUEST_CODE)
-        }
     }
 
     private fun saveCity() {
@@ -156,7 +115,65 @@ class CityFormActivity : AppCompatActivity(), SensorEventListener {
             "Por favor, preencha o nome do país."
         )
 
+        val cepOk = fieldValidator.isEditTextFilled(
+            edtCep,
+            text_input_layout_cep,
+            "Por favor, preencha um CEP."
+        )
+        // TODO não deixar passar se o cep for invalido
+
         return nameOk && countryOk
+    }
+
+    /*
+    * Sessão com lógica da câmera
+    *
+    * */
+
+    private fun startCamera() {
+        val imageFile = createImageFile()
+        val callCameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE_SECURE)
+
+        if (callCameraIntent.resolveActivity(packageManager) !== null) {
+            val authorities = "$packageName.fileprovider"
+            val imageUri = FileProvider.getUriForFile(this, authorities, imageFile)
+            callCameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri)
+
+            startActivityForResult(callCameraIntent, CAMERA_REQUEST_CODE)
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        when (requestCode) {
+            CAMERA_REQUEST_CODE -> {
+                if (resultCode == Activity.RESULT_OK) {
+                    imgCity.setImageBitmap(ImageBuilder.prepare(imageFilePath, imgCity.width, imgCity.height))
+                    turnOffListenerSensor()
+                } else if (resultCode == Activity.RESULT_CANCELED) {
+                    File(imageFilePath).deleteOnExit()
+                    imageFilePath = ""
+                    turnOnListenerSensor()
+                }
+            }
+        }
+    }
+
+    private fun createImageFile(): File {
+        val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
+        val imageFileName: String = "FOTA_" + timeStamp + "_"
+
+        val storageDir: File = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+
+        if (!storageDir.exists()) {
+            storageDir.mkdirs()
+        }
+
+        val imageFile = File.createTempFile(imageFileName, ".png", storageDir)
+        imageFilePath = imageFile.absolutePath
+
+        return imageFile
     }
 
     /*

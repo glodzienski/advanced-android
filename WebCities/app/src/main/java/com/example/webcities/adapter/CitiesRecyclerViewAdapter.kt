@@ -1,4 +1,4 @@
-package com.example.webcities.adapters
+package com.example.webcities.adapter
 
 import android.content.Intent
 import android.os.Bundle
@@ -8,15 +8,15 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import com.example.webcities.entities.City
+import com.example.webcities.entity.City
 import com.example.webcities.ui.fragment.CityDetailFragment
 import com.example.webcities.ui.activity.CityDetailActivity
 import com.example.webcities.ui.activity.CityListActivity
 import kotlinx.android.synthetic.main.city_list_content.view.*
 import com.example.webcities.R
 import com.example.webcities.ui.activity.CityFormActivity
-import com.example.webcities.utils.DialogOnConfirm
-import com.example.webcities.utils.ImageBuilder
+import com.example.webcities.util.DialogOnConfirm
+import com.example.webcities.util.ImageBuilder
 
 class CitiesRecyclerViewAdapter(
     private val parentActivity: CityListActivity,

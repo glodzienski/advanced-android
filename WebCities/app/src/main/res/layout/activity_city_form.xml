@@ -57,6 +57,26 @@
                         android:ems="10"
                         android:id="@+id/edtCountry" android:inputType="text"/>
             </android.support.design.widget.TextInputLayout>
+            <android.support.design.widget.TextInputLayout
+                    android:id="@+id/text_input_layout_cep"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp">
+
+                <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="CEP"
+                        android:ems="10"
+                        android:id="@+id/edtCep" android:inputType="number"/>
+            </android.support.design.widget.TextInputLayout>
+            <TextView
+                    android:text="Iluminação:"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:id="@+id/iluminacao_status_label"
+                    android:textSize="18sp"
+                    android:layout_marginVertical="5dp"/>
             <TextView
                     android:id="@+id/photo_conditions_enviroment_label"
                     android:text="Condições do ambiente para uma foto"
@@ -64,12 +84,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginVertical="20dp"
                     android:textStyle="bold" android:textSize="18sp" android:visibility="gone"/>
-            <TextView
-                    android:text="Iluminação:"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" android:id="@+id/iluminacao_status_label"
-                    android:textSize="18sp"
-                    android:layout_marginVertical="5dp"/>
             <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" android:id="@+id/iluminacao_status_value"

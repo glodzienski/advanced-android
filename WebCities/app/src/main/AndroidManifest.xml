@@ -15,7 +15,6 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme"
             android:usesCleartextTraffic="true">
-        <activity android:name=".ui.activity.MainActivity"/>
         <activity android:name=".ui.activity.CityFormActivity"/>
         <activity
                 android:name=".ui.activity.CityListActivity"

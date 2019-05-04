@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.webcities.R
 import com.example.webcities.dummy.CitiesContent
-import com.example.webcities.entities.City
+import com.example.webcities.entity.City
 import kotlinx.android.synthetic.main.activity_city_detail.*
 import kotlinx.android.synthetic.main.city_detail.view.*
 

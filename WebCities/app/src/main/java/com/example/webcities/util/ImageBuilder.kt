@@ -1,4 +1,4 @@
-package com.example.webcities.utils
+package com.example.webcities.util
 
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory

@@ -1,6 +1,6 @@
-package com.example.webcities.repositories
+package com.example.webcities.repository
 
-import com.example.webcities.entities.City
+import com.example.webcities.entity.City
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 

@@ -1,4 +1,4 @@
-package com.example.webcities.utils
+package com.example.webcities.util
 
 import android.view.WindowManager
 import android.app.Activity

@@ -1,4 +1,4 @@
-package com.example.webcities.utils
+package com.example.webcities.util
 
 import android.app.AlertDialog
 import android.content.Context
