@@ -3,6 +3,10 @@ package com.example.webcities.ui.activity
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.hardware.Sensor
+import android.hardware.SensorEvent
+import android.hardware.SensorEventListener
+import android.hardware.SensorManager
 import com.example.webcities.R
 
 import android.support.v7.app.AppCompatActivity
@@ -19,11 +23,10 @@ import com.example.webcities.utils.ImageBuilder
 import kotlinx.android.synthetic.main.activity_city_form.*
 import java.io.File
 import java.io.IOException
-import java.lang.Exception
 import java.text.SimpleDateFormat
 import java.util.*
 
-class CityFormActivity : AppCompatActivity() {
+class CityFormActivity : AppCompatActivity(), SensorEventListener {
 
     val CAMERA_REQUEST_CODE = 0
     var imageFilePath: String = ""
@@ -151,5 +154,60 @@ class CityFormActivity : AppCompatActivity() {
         )
 
         return nameOk && countryOk
+    }
+
+    /*
+    * Aqui para baixo, implementação de sensor
+    *
+    * */
+
+    private val sensorManager: SensorManager by lazy {
+        getSystemService(Context.SENSOR_SERVICE) as SensorManager
+    }
+
+    override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {
+
+    }
+
+    override fun onSensorChanged(event: SensorEvent?) {
+        iluminacao_status_value.text = event!!.values.zip("XYZ".toList()).fold(""){
+                acc, pair ->
+            getIluminacaoStatus(pair.first)
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        sensorManager.registerListener(
+            this,
+            sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT),
+            SensorManager.SENSOR_DELAY_NORMAL
+        )
+    }
+
+    override fun onPause() {
+        super.onPause()
+
+        sensorManager.unregisterListener(this)
+    }
+
+    /*
+    * Valores baseados na tabela do site https://en.wikipedia.org/wiki/Lux
+    * */
+    private fun getIluminacaoStatus (value: Float): String {
+        if (value <= 320) {
+            return "Menos que o ideal; A foto não ficará tão boa. Recomendado uso do flash."
+        }
+
+        if (value > 320 && value <= 25.000) {
+            return "Ideal; A foto ficará ótima."
+        }
+
+        if (value > 25.000 && value <= 100.000) {
+            return "Muita; A foto ficará ruim. Recomendado local com menos iluminação."
+        }
+
+        return "Não foi possível calcular o status da iluminação do ambiente"
     }
 }

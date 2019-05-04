@@ -42,7 +42,7 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
 
         sensorManager.registerListener(
             this,
-            sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE),
+            sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT),
             SensorManager.SENSOR_DELAY_NORMAL
         )
     }

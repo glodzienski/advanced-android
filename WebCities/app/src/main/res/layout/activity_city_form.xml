@@ -6,17 +6,16 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fitsSystemWindows="true"
-        tools:context=".ui.activity.CityFormActivity">
+        tools:context=".ui.activity.CityFormActivity" android:orientation="vertical">
 
     <ScrollView
-            xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/scroll"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
         <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:id="@+id/formFields"
                 android:layout_marginHorizontal="10dp">
             <TextView android:text="@string/title_form_city"
@@ -26,7 +25,7 @@
                       android:textSize="24sp"
                       android:textColor="#494949"
                       android:textStyle="bold"
-                      android:textAlignment="textStart"
+                      android:textAlignment="viewStart"
                       android:padding="15dp"
             />
             <android.support.design.widget.TextInputLayout
@@ -58,10 +57,25 @@
                         android:ems="10"
                         android:id="@+id/edtCountry" android:inputType="text"/>
             </android.support.design.widget.TextInputLayout>
-            <Button
-                    android:text="Tirar foto"
+            <TextView
+                    android:id="@+id/photo_conditions_enviroment_label"
+                    android:text="Condições do ambiente para uma foto"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" android:id="@+id/btnAddPhoto"/>
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="20dp"
+                    android:textStyle="bold" android:textSize="18sp"/>
+            <TextView
+                    android:text="Iluminação:"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:id="@+id/iluminacao_status_label"
+                    android:textSize="18sp"
+                    android:layout_marginVertical="5dp"/>
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:id="@+id/iluminacao_status_value"
+                    android:textSize="18sp"
+                    android:layout_marginVertical="10dp"
+            />
             <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -73,6 +87,10 @@
                     android:background="@color/common_google_signin_btn_text_light_default"
                     app:layout_constraintHorizontal_bias="0.0" app:layout_constraintVertical_bias="1.0"
                     app:srcCompat="@mipmap/ic_launcher"/>
+            <Button
+                    android:text="Tirar foto"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:id="@+id/btnAddPhoto"/>
         </LinearLayout>
     </ScrollView>
     <android.support.design.widget.FloatingActionButton
