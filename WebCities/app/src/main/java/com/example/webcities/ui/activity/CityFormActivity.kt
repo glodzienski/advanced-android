@@ -15,6 +15,7 @@ import android.os.Environment
 import android.provider.MediaStore
 import android.support.v4.content.FileProvider
 import android.util.Log
+import android.view.View
 import com.example.webcities.utils.FieldValidator
 import com.example.webcities.dummy.CitiesContent
 import com.example.webcities.entities.City
@@ -77,9 +78,11 @@ class CityFormActivity : AppCompatActivity(), SensorEventListener {
             CAMERA_REQUEST_CODE -> {
                 if (resultCode == Activity.RESULT_OK) {
                     imgCity.setImageBitmap(ImageBuilder.prepare(imageFilePath, imgCity.width, imgCity.height))
+                    turnOffListenerSensor()
                 } else if (resultCode == Activity.RESULT_CANCELED) {
                     File(imageFilePath).deleteOnExit()
                     imageFilePath = ""
+                    turnOnListenerSensor()
                 }
             }
         }
@@ -165,13 +168,38 @@ class CityFormActivity : AppCompatActivity(), SensorEventListener {
         getSystemService(Context.SENSOR_SERVICE) as SensorManager
     }
 
+    private fun turnOnListenerSensor(): Unit {
+        try {
+            sensorManager.registerListener(
+                this,
+                sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT),
+                SensorManager.SENSOR_DELAY_NORMAL
+            )
+            photo_conditions_enviroment_label.visibility = View.VISIBLE
+            iluminacao_status_label.visibility = View.VISIBLE
+            iluminacao_status_value.visibility = View.VISIBLE
+        } catch (e: IOException) {
+            Log.d("ERRO IO: ", "Não foi possível ativar listener do sensor de iluminação")
+        }
+    }
+
+    private fun turnOffListenerSensor(): Unit {
+        try {
+            sensorManager.unregisterListener(this)
+            photo_conditions_enviroment_label.visibility = View.GONE
+            iluminacao_status_label.visibility = View.GONE
+            iluminacao_status_value.visibility = View.GONE
+        } catch (e: IOException) {
+            Log.d("ERRO IO: ", "Não foi possível desativar listener do sensor de iluminação")
+        }
+    }
+
     override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {
 
     }
 
     override fun onSensorChanged(event: SensorEvent?) {
-        iluminacao_status_value.text = event!!.values.zip("XYZ".toList()).fold(""){
-                acc, pair ->
+        iluminacao_status_value.text = event!!.values.zip("XYZ".toList()).fold("") { acc, pair ->
             getIluminacaoStatus(pair.first)
         }
     }
@@ -179,23 +207,23 @@ class CityFormActivity : AppCompatActivity(), SensorEventListener {
     override fun onResume() {
         super.onResume()
 
-        sensorManager.registerListener(
-            this,
-            sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT),
-            SensorManager.SENSOR_DELAY_NORMAL
-        )
+        if (imageFilePath.isNullOrBlank()) {
+            turnOnListenerSensor()
+        }
     }
 
     override fun onPause() {
         super.onPause()
 
-        sensorManager.unregisterListener(this)
+        if (imageFilePath.isNullOrBlank()) {
+            turnOffListenerSensor()
+        }
     }
 
     /*
     * Valores baseados na tabela do site https://en.wikipedia.org/wiki/Lux
     * */
-    private fun getIluminacaoStatus (value: Float): String {
+    private fun getIluminacaoStatus(value: Float): String {
         if (value <= 320) {
             return "Menos que o ideal; A foto não ficará tão boa. Recomendado uso do flash."
         }
