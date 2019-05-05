@@ -8,7 +8,7 @@
               android:divider="?android:attr/dividerHorizontal"
               android:orientation="horizontal"
               android:showDividers="middle"
-              tools:context=".ui.activity.CityListActivity">
+              tools:context=".ui.activity.MomentListActivity">
 
     <!--
     This layout is a two-pane layout for the Cities
@@ -23,7 +23,7 @@
                                             android:layout_width="wrap_content"
                                             android:layout_height="match_parent"
                                             app:layoutManager="LinearLayoutManager"
-                                            tools:context="com.example.webcities.ui.activity.CityListActivity"
+                                            tools:context="com.example.webcities.ui.activity.MomentListActivity"
                                             tools:listitem="@layout/city_list_content" android:background="#282828"/>
 
     <FrameLayout

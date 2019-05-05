@@ -6,14 +6,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.webcities.R
-import com.example.webcities.dummy.CitiesContent
-import com.example.webcities.entity.City
+import com.example.webcities.dummy.MomentsContent
+import com.example.webcities.entity.Moment
 import kotlinx.android.synthetic.main.activity_city_detail.*
 import kotlinx.android.synthetic.main.city_detail.view.*
 
-class CityDetailFragment : Fragment() {
+class MomentDetailFragment : Fragment() {
 
-    private lateinit var item: City
+    private lateinit var item: Moment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,7 +21,7 @@ class CityDetailFragment : Fragment() {
 
         arguments?.let {
             if (it.containsKey(ARG_ITEM_ID)) {
-                item = CitiesContent.ITEM_MAP[it.getString(ARG_ITEM_ID)] as City
+                item = MomentsContent.ITEM_MAP[it.getString(ARG_ITEM_ID)] as Moment
                 activity?.toolbar_layout?.title = item?.nome
             }
         }

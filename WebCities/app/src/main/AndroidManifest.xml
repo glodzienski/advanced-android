@@ -15,9 +15,9 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme"
             android:usesCleartextTraffic="true">
-        <activity android:name=".ui.activity.CityFormActivity"/>
+        <activity android:name=".ui.activity.MomentFormActivity"/>
         <activity
-                android:name=".ui.activity.CityListActivity"
+                android:name=".ui.activity.MomentListActivity"
                 android:label="@string/title_city_list"
                 android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -27,13 +27,13 @@
             </intent-filter>
         </activity>
         <activity
-                android:name=".ui.activity.CityDetailActivity"
+                android:name=".ui.activity.MomentDetailActivity"
                 android:label="@string/title_city_detail"
-                android:parentActivityName=".ui.activity.CityListActivity"
+                android:parentActivityName=".ui.activity.MomentListActivity"
                 android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
-                    android:value="com.example.webcities.ui.activity.CityListActivity"/>
+                    android:value="com.example.webcities.ui.activity.MomentListActivity"/>
         </activity>
 
         <provider

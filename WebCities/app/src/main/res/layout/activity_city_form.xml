@@ -6,7 +6,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fitsSystemWindows="true"
-        tools:context=".ui.activity.CityFormActivity" android:orientation="vertical">
+        tools:context=".ui.activity.MomentFormActivity" android:orientation="vertical">
 
     <ScrollView
             android:id="@+id/scroll"
@@ -70,25 +70,19 @@
                         android:hint="CEP"
                         android:ems="10"
                         android:id="@+id/edtCep" android:inputType="number"/>
-                <TextView
-                        android:text="Informações do CEP:"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content" android:id="@+id/address_status_label"
-                        android:textSize="18sp"
-                        android:layout_marginVertical="5dp"/>
-                <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content" android:id="@+id/address_status_value"
-                        android:textSize="18sp"
-                        android:layout_marginVertical="10dp"
-                />
             </android.support.design.widget.TextInputLayout>
             <TextView
-                    android:text="Iluminação:"
+                    android:text="Informações do CEP:"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" android:id="@+id/iluminacao_status_label"
+                    android:layout_height="wrap_content" android:id="@+id/address_status_label"
                     android:textSize="18sp"
                     android:layout_marginVertical="5dp"/>
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:id="@+id/address_status_value"
+                    android:textSize="18sp"
+                    android:layout_marginVertical="10dp"
+            />
             <TextView
                     android:id="@+id/photo_conditions_enviroment_label"
                     android:text="Condições do ambiente para uma foto"
@@ -97,11 +91,17 @@
                     android:layout_marginVertical="20dp"
                     android:textStyle="bold" android:textSize="18sp" android:visibility="gone"/>
             <TextView
+                    android:text="Iluminação:"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:id="@+id/iluminacao_status_label"
+                    android:textSize="18sp"
+                    android:layout_marginVertical="5dp" android:visibility="invisible"/>
+            <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" android:id="@+id/iluminacao_status_value"
                     android:textSize="18sp"
                     android:layout_marginVertical="10dp"
-            />
+                    android:visibility="invisible"/>
             <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

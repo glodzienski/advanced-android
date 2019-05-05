@@ -18,11 +18,11 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.View
-import com.example.webcities.DTO.AddressDTO
+import com.example.webcities.entity.Address
 import com.example.webcities.util.FieldValidatorUtil
-import com.example.webcities.dummy.CitiesContent
-import com.example.webcities.entity.City
-import com.example.webcities.repository.CityRepository
+import com.example.webcities.dummy.MomentsContent
+import com.example.webcities.entity.Moment
+import com.example.webcities.repository.MomentRepository
 import com.example.webcities.service.ViaCepApiService
 import com.example.webcities.util.ImageBuilderUtil
 import com.example.webcities.util.MaskEditUtil
@@ -38,7 +38,7 @@ import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
 
-class CityFormActivity : AppCompatActivity(), SensorEventListener {
+class MomentFormActivity : AppCompatActivity(), SensorEventListener {
 
     /*
     * Referente a camera
@@ -57,7 +57,7 @@ class CityFormActivity : AppCompatActivity(), SensorEventListener {
     * Entidade da tela, para manipular valores e salvar no banoc
     *
     * */
-    lateinit var city: City
+    lateinit var moment: Moment
 
     /*
     * Referente ao ViacepService
@@ -66,27 +66,27 @@ class CityFormActivity : AppCompatActivity(), SensorEventListener {
     private val BASE_URL = "https://viacep.com.br/ws/"
     private val compositeDisposable = CompositeDisposable()
     private val requestInterface = startRetrofit()
-    private lateinit var address: AddressDTO
+    private lateinit var address: Address
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_city_form)
+
         fieldValidatorUtil = FieldValidatorUtil(this)
-
-        if (intent.hasExtra("city_id") && intent.getStringExtra("city_id").isNotEmpty()) {
-            city = CitiesContent.ITEM_MAP[intent.getStringExtra("city_id")] as City
-
-            formTitle.text = getString(R.string.edit_city_label)
-            edtName.setText(city.nome)
-            edtCountry.setText(city.pais)
-            if (city.imagePath.isNotEmpty()) {
-                imgCity.setImageBitmap(ImageBuilderUtil.prepare(city.imagePath, 1000, 500))
-            }
-        }
-
-
         startEdtCepStuffs()
         startCameraStuffs()
+
+        if (intent.hasExtra("city_id") && intent.getStringExtra("city_id").isNotEmpty()) {
+            moment = MomentsContent.ITEM_MAP[intent.getStringExtra("city_id")] as Moment
+
+            formTitle.text = getString(R.string.edit_city_label)
+            edtName.setText(moment.nome)
+            edtCountry.setText(moment.pais)
+            edtCep.setText(moment.address.cep)
+            if (moment.imagePath.isNotEmpty()) {
+                imgCity.setImageBitmap(ImageBuilderUtil.prepare(moment.imagePath, 1000, 500))
+            }
+        }
 
         btnSave.setOnClickListener { view ->
             if (!this.isValidToSaveCity()) {
@@ -95,39 +95,47 @@ class CityFormActivity : AppCompatActivity(), SensorEventListener {
 
             this.saveCity()
 
-            val intent = Intent(view.context, CityListActivity::class.java)
+            val intent = Intent(view.context, MomentListActivity::class.java)
             view.context.startActivity(intent)
         }
     }
 
+    /*
+    * Métodos referentes ao salvar, editar dados da tela.
+    *
+    * */
     private fun isEditing(): Boolean {
-        return ::city.isInitialized
+        return ::moment.isInitialized
     }
 
     private fun saveCity() {
+        address.cep = address.cep.replace("-", "")
         if (this.isEditing()) {
-            city.nome = edtName.text.toString()
-            city.pais = edtCountry.text.toString()
+            moment.nome = edtName.text.toString()
+            moment.pais = edtCountry.text.toString()
             if (imageFilePath.isNotEmpty()) {
-                File(city.imagePath).deleteOnExit()
+                File(moment.imagePath).deleteOnExit()
             }
-            city.imagePath = if (imageFilePath.isNotEmpty()) imageFilePath else city.imagePath
+            moment.imagePath = if (imageFilePath.isNotEmpty()) imageFilePath else moment.imagePath
+            moment.address = address
 
-            CityRepository.update(city)
+            MomentRepository.update(moment)
             return
         }
 
-        val city = City(
-            CitiesContent.ITEMS.count().toString(),
+        val city = Moment(
+            MomentsContent.ITEMS.count().toString(),
             edtName.text.toString(),
             edtCountry.text.toString(),
-            imageFilePath
+            imageFilePath,
+            address
         )
 
-        CityRepository.store(city)
+        MomentRepository.store(city)
     }
 
     private fun isValidToSaveCity(): Boolean {
+        var cepOk = false
         val nameOk = fieldValidatorUtil.isEditTextFilled(
             edtName,
             text_input_layout_name,
@@ -139,14 +147,17 @@ class CityFormActivity : AppCompatActivity(), SensorEventListener {
             "Por favor, preencha o nome do país."
         )
 
-        val cepOk = fieldValidatorUtil.isEditTextFilled(
+        cepOk = fieldValidatorUtil.isEditTextFilled(
             edtCep,
             text_input_layout_cep,
             "Por favor, preencha um CEP."
         )
-        // TODO não deixar passar se o cep for invalido
+        if (edtCep.text.toString().isNotBlank() && address.cep.isNullOrBlank()) {
+            text_input_layout_cep.error = "Por favor, preencha um CEP válido"
+            cepOk = false
+        }
 
-        return nameOk && countryOk
+        return nameOk && countryOk && cepOk
     }
 
     /*
@@ -274,19 +285,19 @@ class CityFormActivity : AppCompatActivity(), SensorEventListener {
     * Valores baseados na tabela do site https://en.wikipedia.org/wiki/Lux
     * */
     private fun getIluminacaoStatus(value: Float): String {
-        if (value <= 320) {
-            return "Menos que o ideal; A foto não ficará tão boa. Recomendado uso do flash."
+        if (value <= 40) {
+            return "${value} lx. Menos que o ideal; A foto não ficará tão boa. Recomendado uso do flash."
         }
 
-        if (value > 320 && value <= 25.000) {
-            return "Ideal; A foto ficará ótima."
+        if (value > 40 && value <= 25000) {
+            return "${value} lx. Ideal; A foto ficará ótima."
         }
 
-        if (value > 25.000 && value <= 100.000) {
-            return "Muita; A foto ficará ruim. Recomendado local com menos iluminação."
+        if (value > 25000 && value <= 100000) {
+            return "${value} lx. Muita; A foto ficará ruim. Recomendado local com menos iluminação."
         }
 
-        return "Não foi possível calcular o status da iluminação do ambiente"
+        return "${value} lx. Não foi possível calcular o status da iluminação do ambiente"
     }
 
     /*
@@ -318,6 +329,9 @@ class CityFormActivity : AppCompatActivity(), SensorEventListener {
                         return
                     }
                     consultCep(value)
+                } else {
+                    address = Address()
+                    address_status_value.text = ""
                 }
             }
         })
@@ -332,8 +346,8 @@ class CityFormActivity : AppCompatActivity(), SensorEventListener {
         )
     }
 
-    private fun handleResponse(addressDTO: AddressDTO) {
-        if (addressDTO.cep.isNullOrEmpty()) {
+    private fun handleResponse(address: Address) {
+        if (address.cep.isNullOrEmpty()) {
             text_input_layout_cep.error = "CEP inválido"
             address_status_label.visibility = View.GONE
             address_status_value.visibility = View.GONE
@@ -341,10 +355,10 @@ class CityFormActivity : AppCompatActivity(), SensorEventListener {
         }
 
         text_input_layout_cep.error = ""
-        address = addressDTO
+        this.address = address
         address_status_label.visibility = View.VISIBLE
         address_status_value.visibility = View.VISIBLE
-        address_status_value.text = addressDTO.toString()
+        address_status_value.text = address.toString()
     }
 
     private fun handleError(error: Throwable) {

@@ -1,8 +1,8 @@
-package com.example.webcities.DTO
+package com.example.webcities.entity
 
 import com.google.gson.annotations.SerializedName
 
-data class AddressDTO (
+data class Address (
     @SerializedName("cep") var cep: String = "",
     @SerializedName("uf") var estado: String = "",
     @SerializedName("localidade") var cidade: String = "",

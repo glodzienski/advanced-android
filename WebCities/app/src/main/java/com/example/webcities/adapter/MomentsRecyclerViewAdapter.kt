@@ -8,31 +8,31 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import com.example.webcities.entity.City
-import com.example.webcities.ui.fragment.CityDetailFragment
-import com.example.webcities.ui.activity.CityDetailActivity
-import com.example.webcities.ui.activity.CityListActivity
+import com.example.webcities.entity.Moment
+import com.example.webcities.ui.fragment.MomentDetailFragment
+import com.example.webcities.ui.activity.MomentDetailActivity
+import com.example.webcities.ui.activity.MomentListActivity
 import kotlinx.android.synthetic.main.city_list_content.view.*
 import com.example.webcities.R
-import com.example.webcities.ui.activity.CityFormActivity
+import com.example.webcities.ui.activity.MomentFormActivity
 import com.example.webcities.util.DialogOnConfirmUtil
 import com.example.webcities.util.ImageBuilderUtil
 
-class CitiesRecyclerViewAdapter(
-    private val parentActivity: CityListActivity,
-    private val values: List<City>,
+class MomentsRecyclerViewAdapter(
+    private val parentActivity: MomentListActivity,
+    private val values: List<Moment>,
     private val twoPane: Boolean
-) : RecyclerView.Adapter<CitiesRecyclerViewAdapter.ViewHolder>() {
+) : RecyclerView.Adapter<MomentsRecyclerViewAdapter.ViewHolder>() {
 
     private var onClickListener: View.OnClickListener
 
     init {
         onClickListener = View.OnClickListener { v ->
-            val item = v.tag as City
+            val item = v.tag as Moment
             if (twoPane) {
-                val fragment = CityDetailFragment().apply {
+                val fragment = MomentDetailFragment().apply {
                     arguments = Bundle().apply {
-                        putString(CityDetailFragment.ARG_ITEM_ID, item.id)
+                        putString(MomentDetailFragment.ARG_ITEM_ID, item.id)
                     }
                 }
                 parentActivity.supportFragmentManager
@@ -43,8 +43,8 @@ class CitiesRecyclerViewAdapter(
                 return@OnClickListener
             }
 
-            val intent = Intent(v.context, CityDetailActivity::class.java).apply {
-                putExtra(CityDetailFragment.ARG_ITEM_ID, item.id)
+            val intent = Intent(v.context, MomentDetailActivity::class.java).apply {
+                putExtra(MomentDetailFragment.ARG_ITEM_ID, item.id)
             }
             v.context.startActivity(intent)
         }
@@ -74,7 +74,7 @@ class CitiesRecyclerViewAdapter(
                     "Atenção",
                     "Deseja editar a cidade ${item.nome}?",
                     {
-                        val intent = Intent(v.context, CityFormActivity::class.java).apply {
+                        val intent = Intent(v.context, MomentFormActivity::class.java).apply {
                             putExtra("city_id", item.id)
                         }
                         v.context.startActivity(intent)

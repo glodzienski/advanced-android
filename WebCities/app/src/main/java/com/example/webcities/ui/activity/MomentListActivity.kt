@@ -8,16 +8,16 @@ import android.support.v7.widget.StaggeredGridLayoutManager
 import android.support.v7.widget.helper.ItemTouchHelper
 import android.widget.Toast
 import com.example.webcities.R
-import com.example.webcities.adapter.CitiesRecyclerViewAdapter
-import com.example.webcities.dummy.CitiesContent
+import com.example.webcities.adapter.MomentsRecyclerViewAdapter
+import com.example.webcities.dummy.MomentsContent
 import kotlinx.android.synthetic.main.activity_city_list.*
 import kotlinx.android.synthetic.main.city_list.*
-import com.example.webcities.entity.City
-import com.example.webcities.repository.CityRepository
+import com.example.webcities.entity.Moment
+import com.example.webcities.repository.MomentRepository
 import com.google.firebase.database.*
 
 
-class CityListActivity : AppCompatActivity() {
+class MomentListActivity : AppCompatActivity() {
 
     private var twoPane: Boolean = false
     private lateinit var instance: DatabaseReference
@@ -29,10 +29,10 @@ class CityListActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
         toolbar.title = "WebCities"
 
-        instance = CityRepository.getInstance()
+        instance = MomentRepository.getInstance()
 
         btnNew.setOnClickListener { view ->
-            val intent = Intent(view.context, CityFormActivity::class.java)
+            val intent = Intent(view.context, MomentFormActivity::class.java)
             view.context.startActivity(intent)
         }
 
@@ -53,12 +53,12 @@ class CityListActivity : AppCompatActivity() {
             override fun onCancelled(p0: DatabaseError) {}
 
             override fun onDataChange(dataSnapshot: DataSnapshot) {
-                CitiesContent.clear()
+                MomentsContent.clear()
 
-                dataSnapshot.children.mapNotNullTo(CitiesContent.ITEMS) {
-                    it.getValue<City>(City::class.java)
+                dataSnapshot.children.mapNotNullTo(MomentsContent.ITEMS) {
+                    it.getValue<Moment>(Moment::class.java)
                 }
-                CitiesContent.ITEMS.forEach { city -> CitiesContent.ITEM_MAP.put(city.id, city) }
+                MomentsContent.ITEMS.forEach { city -> MomentsContent.ITEM_MAP.put(city.id, city) }
 
                 city_list.adapter!!.notifyDataSetChanged()
             }
@@ -68,7 +68,7 @@ class CityListActivity : AppCompatActivity() {
 
     private fun setupRecyclerView(recyclerView: RecyclerView) {
         recyclerView.let {
-            it.adapter = CitiesRecyclerViewAdapter(this, CitiesContent.ITEMS, twoPane)
+            it.adapter = MomentsRecyclerViewAdapter(this, MomentsContent.ITEMS, twoPane)
             it.layoutManager = StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL)
         }
     }
@@ -84,10 +84,10 @@ class CityListActivity : AppCompatActivity() {
 
             override fun onSwiped(p0: RecyclerView.ViewHolder, p1: Int) {
                 val position = p0.adapterPosition
-                val toDelete: City = CitiesContent.ITEMS.get(position)
+                val toDelete: Moment = MomentsContent.ITEMS.get(position)
 
-                CityRepository.destroy(toDelete)
-                CitiesContent.remove(toDelete)
+                MomentRepository.destroy(toDelete)
+                MomentsContent.remove(toDelete)
 
                 recyclerView.adapter!!.notifyItemRemoved(position)
                 val toast = Toast.makeText(
