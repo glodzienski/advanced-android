@@ -1,0 +1,44 @@
+{
+  "project_info": {
+    "project_number": "45656185331",
+    "firebase_url": "https://webcities-b5bab.firebaseio.com",
+    "project_id": "webmoments-b5bab",
+    "storage_bucket": "webmoments-b5bab.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:45656185331:android:52d229fe3090386d",
+        "android_client_info": {
+          "package_name": "com.example.webmoments"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "45656185331-9g5c7iui0b7t6d4o2s5oom9rj2fbbe9o.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.webmoments",
+            "certificate_hash": "793897abf4ebe09f2871d28d3374bab48eacfb89"
+          }
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAyTJW44UCOIdItX1xp_Drp_w92uMl524A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "45656185331-ea3ei2k2fqmjufrfan1nnqpjkts314uf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

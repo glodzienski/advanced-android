@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">WebMoments</string>
+    <string name="title_moment_list">Moments</string>
+    <string name="title_moment_detail">Moment Detail</string>
+    <string name="title_form_moment">Cadastrar momento</string>
+    <string name="moment_name_label">Momento Nome</string>
+    <string name="moment_description_label">Momento descrição</string>
+    <string name="edit_moment_label">Editar momento</string>
+    <string name="moment_address_label">Endereço</string>
+</resources>
