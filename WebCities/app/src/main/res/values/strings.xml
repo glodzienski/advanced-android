@@ -1,9 +1,10 @@
 <resources>
-    <string name="app_name">WebCities</string>
-    <string name="title_city_list">Cities</string>
-    <string name="title_city_detail">City Detail</string>
-    <string name="title_form_city">Cadastrar cidade</string>
-    <string name="city_name_label">Cidade Nome</string>
-    <string name="city_country_label">Cidade País</string>
-    <string name="edit_city_label">Editar cidade</string>
+    <string name="app_name">WebMoments</string>
+    <string name="title_moment_list">Moments</string>
+    <string name="title_moment_detail">Moment Detail</string>
+    <string name="title_form_moment">Cadastrar momento</string>
+    <string name="moment_name_label">Momento Nome</string>
+    <string name="moment_description_label">Momento descrição</string>
+    <string name="edit_moment_label">Editar momento</string>
+    <string name="moment_address_label">Endereço</string>
 </resources>
